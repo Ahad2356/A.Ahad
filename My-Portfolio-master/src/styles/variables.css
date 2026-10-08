@@ -1,0 +1,23 @@
+:root {
+  --primary-red: #e50914;
+  --bright-red: #ff2a4b;
+  --accent-orange: #ff5500;
+  --bg-dark: #060508;
+  --bg-card: rgba(10, 8, 14, 0.42);
+  --bg-card-hover: rgba(18, 14, 24, 0.62);
+  --border-color: rgba(255, 60, 30, 0.22);
+  --border-hover: rgba(255, 80, 30, 0.6);
+  --text-main: #ffffff;
+  --text-muted: #a5a5b5;
+  --glow-red: 0 0 20px rgba(255, 42, 75, 0.35);
+  --glow-red-lg: 0 0 35px rgba(255, 42, 75, 0.55);
+  --glow-orange: 0 0 20px rgba(255, 85, 0, 0.35);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}

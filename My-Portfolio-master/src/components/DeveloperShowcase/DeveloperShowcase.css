@@ -1,0 +1,125 @@
+/* Tasteful Developer Code / 3D Terminal Card */
+.dev-showcase-wrap {
+  perspective: 1000px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.dev-terminal-card {
+  background: rgba(10, 8, 14, 0.88);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 42, 75, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: transform 0.25s ease-out, border-color var(--transition-fast);
+  transform-style: preserve-3d;
+}
+.dev-terminal-card:hover {
+  border-color: var(--border-hover);
+}
+
+.dev-terminal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dev-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dev-light {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dev-light.red { background: #ff5f56; }
+.dev-light.yellow { background: #ffbd2e; }
+.dev-light.green { background: #27c93f; }
+
+.dev-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.dev-tab-btn {
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+.dev-tab-btn.active {
+  background: rgba(255, 42, 75, 0.15);
+  border-color: rgba(255, 42, 75, 0.35);
+  color: #ffffff;
+}
+
+.dev-terminal-body {
+  padding: 18px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #e0e0e8;
+  overflow-x: auto;
+}
+
+.dev-code-line {
+  display: flex;
+  gap: 14px;
+}
+
+.dev-line-num {
+  color: rgba(255, 255, 255, 0.25);
+  user-select: none;
+  min-width: 20px;
+  text-align: right;
+  font-size: 11px;
+}
+
+.dev-code-content {
+  flex: 1;
+}
+
+.syntax-keyword { color: var(--bright-red); font-weight: 700; }
+.syntax-fn { color: #61dafb; }
+.syntax-string { color: #98c379; }
+.syntax-comment { color: #7f848e; font-style: italic; }
+.syntax-prop { color: #e5c07b; }
+.syntax-num { color: var(--accent-orange); }
+
+.dev-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #27c93f;
+  text-transform: uppercase;
+}
+.dev-status-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #27c93f;
+  box-shadow: 0 0 8px #27c93f;
+  animation: pulseGlow 2s infinite;
+}

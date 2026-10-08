@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me | A. AHAD Portfolio</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-red: #e50914;
+      --bright-red: #ff2a4b;
+      --accent-orange: #ff5500;
+      --bg-dark: #060508;
+      --border-color: rgba(255, 60, 30, 0.22);
+      --border-hover: rgba(255, 80, 30, 0.6);
+      --text-main: #ffffff;
+      --text-muted: #a5a5b5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      background: 
+        radial-gradient(circle at 15% 25%, rgba(229, 9, 20, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 80% 60%, rgba(255, 85, 0, 0.14) 0%, transparent 50%),
+        #060508;
+    }
+
+    .header-bar {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 50px;
+      display: flex; align-items: center; justify-content: space-between; z-index: 100;
+      background: linear-gradient(180deg, rgba(6, 5, 8, 0.95) 0%, rgba(6, 5, 8, 0) 100%);
+    }
+
+    .brand-logo { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #ffffff; text-decoration: none; }
+    .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent-orange), var(--bright-red)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); font-size: 14px; }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { color: #c0c0d0; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s ease; position: relative; }
+    .nav-links a.active, .nav-links a:hover { color: #ffffff; }
+    .nav-links a.active::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 16px; height: 3px; background: var(--bright-red); border-radius: 2px; box-shadow: 0 0 8px var(--bright-red); }
+
+    .talk-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border: 1px solid var(--bright-red); border-radius: 30px; color: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; background: rgba(255, 30, 60, 0.08); box-shadow: 0 0 12px rgba(255, 30, 60, 0.2); }
+
+    .section-container { max-width: 1320px; margin: 0 auto; padding: 80px 40px; }
+    .page-hero { padding-top: 150px; padding-bottom: 30px; }
+    
+    .hero-tag { font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--bright-red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .hero-tag::before { content: ''; width: 8px; height: 8px; background: var(--bright-red); border-radius: 50%; box-shadow: 0 0 10px var(--bright-red); }
+    .hero-title { font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 16px; line-height: 1.05; }
+    .hero-subtext { font-size: 16px; color: var(--text-muted); max-width: 680px; line-height: 1.6; }
+
+    .story-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; }
+    .story-card { border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; }
+    .story-text { font-size: 15px; color: #d0d0e0; line-height: 1.7; margin-bottom: 20px; }
+    
+    .script-sign { font-family: 'Caveat', cursive; font-size: 38px; color: var(--bright-red); margin-top: 16px; }
+
+    .highlight-list { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+    .hl-item { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; color: #e0e0e0; text-decoration: none; }
+    .hl-item:hover { color: var(--bright-red); }
+    .hl-icon { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255, 42, 75, 0.4); color: var(--bright-red); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+    .milestones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .ms-card { border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; }
+    .ms-date { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: var(--bright-red); text-transform: uppercase; margin-bottom: 6px; }
+    .ms-title { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+    .ms-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+    .interests-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .interest-box { border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; text-align: center; }
+    .ib-icon { font-size: 36px; margin-bottom: 12px; }
+    .ib-title { font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+    .ib-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    footer { padding: 30px 50px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); margin-top: 60px; flex-wrap: wrap; gap: 20px; }
+    .social-links { display: flex; gap: 16px; list-style: none; flex-wrap: wrap; }
+    .social-links a { color: var(--text-muted); font-size: 12px; font-weight: 700; text-decoration: none; }
+    .social-links a:hover { color: var(--bright-red); }
+
+    @media (max-width: 1024px) { .story-grid, .milestones-grid, .interests-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="header-bar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-icon">A</span>
+      A. AHAD
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="projects.html">PROJECTS</a></li>
+      <li><a href="services.html">SERVICES</a></li>
+      <li><a href="weather-app.html">WEATHER APP</a></li>
+      <li><a href="todo-app.html">TODO APP</a></li>
+      <li><a href="about.html" class="active">ABOUT</a></li>
+    </ul>
+    <a href="https://wa.me/qr/6OEY44RSXBNHB1" target="_blank" rel="noopener noreferrer" class="talk-btn">💬 LET'S TALK</a>
+  </header>
+
+  <!-- SECTION 1: HERO TITLE & SUBTEXT -->
+  <section class="section-container page-hero">
+    <div class="hero-tag">GET TO KNOW ME</div>
+    <h1 class="hero-title">ABOUT ABDUL AHAD</h1>
+    <p class="hero-subtext">
+      Computer Science student, Full Stack Developer, and passionate tech innovator focused on building modern, responsive digital web applications.
+    </p>
+
+    <div style="margin-top: 24px;">
+      <a href="./Abdul_Ahad_Resume.pdf" download="Abdul_Ahad_Resume.pdf" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 1px solid var(--bright-red); background: rgba(229, 9, 20, 0.15); color: #fff; border-radius: 6px; font-weight: 800; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;">
+        📄 DOWNLOAD MY CV / RESUME
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 2: MY STORY & HIGHLIGHTS -->
+  <section class="section-container" style="padding-top: 0;">
+    <div class="story-grid">
+      <div class="story-card">
+        <h2 style="font-size: 22px; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; color: var(--bright-red);">MY JOURNEY & PHILOSOPHY</h2>
+        <p class="story-text">
+          I'm Abdul Ahad, a dedicated Computer Science student based in Lahore, Pakistan. My journey into web engineering started with a curiosity for how complex digital interfaces are built behind the scenes.
+        </p>
+        <p class="story-text">
+          Over the past 3+ years, I have honed my skills across React.js, JavaScript (ES6+), HTML5, CSS3, and WordPress customization. My mission is to merge engineering precision with modern visual design to deliver fast, secure, and user-centric web applications.
+        </p>
+        <div class="script-sign">Abdul Ahad</div>
+      </div>
+
+      <div class="story-card">
+        <h2 style="font-size: 22px; font-weight: 800; text-transform: uppercase; margin-bottom: 16px;">AT A GLANCE</h2>
+        <div class="highlight-list">
+          <div class="hl-item">
+            <div class="hl-icon">📍</div>
+            <span>Based in Lahore, PPB, Pakistan</span>
+          </div>
+          <div class="hl-item">
+            <div class="hl-icon">🎓</div>
+            <span>ICS Physics (2nd Year) @ Govt MAO College Lahore</span>
+          </div>
+          <div class="hl-item">
+            <div class="hl-icon">💼</div>
+            <span>CSR @ Pets one.pk (Jan 2024 — Feb 2025)</span>
+          </div>
+          <div class="hl-item">
+            <div class="hl-icon">🏆</div>
+            <span>QuizOff 2026 AI Quiz Top Competitor</span>
+          </div>
+          <a href="https://github.com/Ahad2356" target="_blank" rel="noopener noreferrer" class="hl-item">
+            <div class="hl-icon">💻</div>
+            <span>GitHub Profile: github.com/Ahad2356</span>
+          </a>
+          <a href="https://www.linkedin.com/in/abdul-ahad-45b369300" target="_blank" rel="noopener noreferrer" class="hl-item">
+            <div class="hl-icon">👔</div>
+            <span>LinkedIn Profile: abdul-ahad-45b369300</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MILESTONES & CERTIFICATIONS -->
+  <section class="section-container">
+    <div class="hero-tag">ACADEMIC & WORK EXPERIENCE</div>
+    <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">MILESTONES & CREDENTIALS</h2>
+
+    <div class="milestones-grid">
+      <div class="ms-card">
+        <div class="ms-date">JAN 2024 — FEB 2025</div>
+        <div class="ms-title">CSR Experience</div>
+        <div class="ms-desc">Pets one.pk-Lahore. Managed client communications & inquiry resolution.</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-date">2024 — PRESENT</div>
+        <div class="ms-title">ICS Computer Science</div>
+        <div class="ms-desc">Govt MAO College Lahore-Lahore. 2nd year ICS physics.</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-date">2021 — 2023</div>
+        <div class="ms-title">Matriculation (Science)</div>
+        <div class="ms-desc">Govt. Boys High school 531-A Gulshan E Ravi Lahore.</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-date">2026 ACHIEVEMENT</div>
+        <div class="ms-title">QuizOff 2026 AI Quiz</div>
+        <div class="ms-desc">Competed against 5.25+ lakh students from 48,500+ institutions.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PERSONAL INTERESTS -->
+  <section class="section-container">
+    <div class="hero-tag">BEYOND CODE</div>
+    <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">TECH INTERESTS & PASSIONS</h2>
+
+    <div class="interests-grid">
+      <div class="interest-box">
+        <div class="ib-icon">🧠</div>
+        <div class="ib-title">ARTIFICIAL INTELLIGENCE</div>
+        <div class="ib-desc">Exploring generative AI, prompt engineering, and machine learning models.</div>
+      </div>
+
+      <div class="interest-box">
+        <div class="ib-icon">🛡️</div>
+        <div class="ib-title">CYBER SECURITY</div>
+        <div class="ib-desc">Studying web vulnerability auditing, secure API authentication, and data privacy.</div>
+      </div>
+
+      <div class="interest-box">
+        <div class="ib-icon">🤖</div>
+        <div class="ib-title">ROBOTICS</div>
+        <div class="ib-desc">Fascinated by hardware-software integration, automation, and IoT control systems.</div>
+      </div>
+
+      <div class="interest-box">
+        <div class="ib-icon">💻</div>
+        <div class="ib-title">FULL STACK DEV</div>
+        <div class="ib-desc">Building scalable, user-first web applications that solve real-world problems.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="font-weight: 800; font-size: 14px;">A. AHAD</div>
+    <ul class="social-links">
+      <li><a href="https://github.com/Ahad2356" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/abdul-ahad-45b369300" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="https://youtube.com/@aahad2300?si=NTocVwvZBQEog1ra" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+      <li><a href="https://www.instagram.com/abdul36847?stkn=MXV6NmVjOHkxeWlkNA==" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+      <li><a href="https://www.facebook.com/share/1EVwwYp1iX/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+      <li><a href="http://t.me/AAhad32" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+      <li><a href="https://wa.me/qr/6OEY44RSXBNHB1" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+    </ul>
+    <div style="font-size: 11px; color: var(--text-muted);">© 2025 Abdul Ahad. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App | A. AHAD Portfolio</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-red: #e50914;
+      --bright-red: #ff2a4b;
+      --accent-orange: #ff5500;
+      --bg-dark: #060508;
+      --border-color: rgba(255, 60, 30, 0.22);
+      --border-hover: rgba(255, 80, 30, 0.6);
+      --text-main: #ffffff;
+      --text-muted: #a5a5b5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      background: 
+        radial-gradient(circle at 75% 20%, rgba(255, 85, 0, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 20% 70%, rgba(229, 9, 20, 0.16) 0%, transparent 50%),
+        #060508;
+    }
+
+    .header-bar {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 50px;
+      display: flex; align-items: center; justify-content: space-between; z-index: 100;
+      background: linear-gradient(180deg, rgba(6, 5, 8, 0.95) 0%, rgba(6, 5, 8, 0) 100%);
+    }
+
+    .brand-logo { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #ffffff; text-decoration: none; }
+    .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent-orange), var(--bright-red)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); font-size: 14px; }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { color: #c0c0d0; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s ease; position: relative; }
+    .nav-links a.active, .nav-links a:hover { color: #ffffff; }
+    .nav-links a.active::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 16px; height: 3px; background: var(--bright-red); border-radius: 2px; box-shadow: 0 0 8px var(--bright-red); }
+
+    .talk-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border: 1px solid var(--bright-red); border-radius: 30px; color: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; background: rgba(255, 30, 60, 0.08); box-shadow: 0 0 12px rgba(255, 30, 60, 0.2); }
+
+    .section-container { max-width: 1320px; margin: 0 auto; padding: 80px 40px; }
+    .page-hero { padding-top: 150px; padding-bottom: 30px; }
+    
+    .hero-tag { font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--bright-red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .hero-tag::before { content: ''; width: 8px; height: 8px; background: var(--bright-red); border-radius: 50%; box-shadow: 0 0 10px var(--bright-red); }
+    .hero-title { font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 16px; line-height: 1.05; }
+    .hero-subtext { font-size: 16px; color: var(--text-muted); max-width: 680px; line-height: 1.6; }
+
+    .todo-app-card { border: 1px solid var(--border-color); border-radius: 20px; padding: 36px; background: rgba(10, 10, 15, 0.85); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); max-width: 800px; margin: 0 auto; }
+    .todo-input-row { display: flex; gap: 12px; margin-bottom: 24px; }
+    .task-input { flex: 1; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; color: #fff; font-family: inherit; font-size: 14px; outline: none; }
+    .add-task-btn { padding: 14px 24px; background: linear-gradient(135deg, var(--accent-orange), var(--bright-red)); border: none; border-radius: 10px; color: #fff; font-weight: 800; font-size: 12px; letter-spacing: 1.5px; cursor: pointer; text-transform: uppercase; }
+
+    .todo-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; font-weight: 700; }
+    .todo-progress-bg { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; margin-bottom: 24px; }
+    .todo-progress-fill { height: 100%; width: 50%; background: linear-gradient(90deg, var(--accent-orange), var(--bright-red)); border-radius: 4px; transition: width 0.3s ease; }
+
+    .task-list { display: flex; flex-direction: column; gap: 12px; }
+    .task-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; background: rgba(255, 255, 255, 0.02); transition: all 0.2s ease; }
+    .task-item.completed span { text-decoration: line-through; color: var(--text-muted); opacity: 0.6; }
+
+    .task-left { display: flex; align-items: center; gap: 14px; font-size: 14px; font-weight: 600; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--bright-red); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+    .task-item.completed .check-box { background: var(--bright-red); }
+    .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 14px; font-weight: 700; opacity: 0.7; }
+    .delete-btn:hover { opacity: 1; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .feature-card { border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; }
+    .feature-icon { font-size: 28px; margin-bottom: 12px; }
+    .feature-title { font-size: 15px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
+    .feature-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    footer { padding: 30px 50px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); margin-top: 60px; flex-wrap: wrap; gap: 20px; }
+    .social-links { display: flex; gap: 16px; list-style: none; flex-wrap: wrap; }
+    .social-links a { color: var(--text-muted); font-size: 12px; font-weight: 700; text-decoration: none; }
+    .social-links a:hover { color: var(--bright-red); }
+
+    @media (max-width: 1024px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .features-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="header-bar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-icon">A</span>
+      A. AHAD
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="projects.html">PROJECTS</a></li>
+      <li><a href="services.html">SERVICES</a></li>
+      <li><a href="weather-app.html">WEATHER APP</a></li>
+      <li><a href="todo-app.html" class="active">TODO APP</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+    </ul>
+    <a href="https://wa.me/qr/6OEY44RSXBNHB1" target="_blank" rel="noopener noreferrer" class="talk-btn">💬 LET'S TALK</a>
+  </header>
+
+  <!-- SECTION 1: HERO TITLE & SUBTEXT -->
+  <section class="section-container page-hero">
+    <div class="hero-tag">INTERACTIVE UTILITY DEMO</div>
+    <h1 class="hero-title">TASKFLOW TODO APPLICATION</h1>
+    <p class="hero-subtext">
+      An ultra-responsive task management dashboard engineered for high daily productivity, category tags, priority tracking, and local storage data persistence.
+    </p>
+
+    <div style="margin-top: 24px;">
+      <a href="./Abdul_Ahad_Resume.pdf" download="Abdul_Ahad_Resume.pdf" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 1px solid var(--bright-red); background: rgba(229, 9, 20, 0.15); color: #fff; border-radius: 6px; font-weight: 800; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;">
+        📄 DOWNLOAD MY CV / RESUME
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 2: INTERACTIVE LIVE WIDGET -->
+  <section class="section-container" style="padding-top: 0;">
+    <div class="todo-app-card">
+      <div class="todo-input-row">
+        <input type="text" id="newTaskInput" class="task-input" placeholder="Add a new priority task (e.g. Review React Code)...">
+        <button class="add-task-btn" onclick="addNewTask()">+ ADD TASK</button>
+      </div>
+
+      <div class="todo-progress-header">
+        <span>TASK PROGRESS</span>
+        <span id="taskStatsText">2 of 4 tasks completed</span>
+      </div>
+
+      <div class="todo-progress-bg">
+        <div class="todo-progress-fill" id="taskProgressFill" style="width: 50%;"></div>
+      </div>
+
+      <div class="task-list" id="taskListContainer">
+        <!-- Task 1 -->
+        <div class="task-item completed" onclick="toggleTask(this)">
+          <div class="task-left">
+            <div class="check-box">✓</div>
+            <span>Finalize Full Stack Portfolio Design</span>
+          </div>
+          <div class="delete-btn" onclick="deleteTask(event, this)">✕</div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-item completed" onclick="toggleTask(this)">
+          <div class="task-left">
+            <div class="check-box">✓</div>
+            <span>Integrate Weather App API Hook</span>
+          </div>
+          <div class="delete-btn" onclick="deleteTask(event, this)">✕</div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="task-item" onclick="toggleTask(this)">
+          <div class="task-left">
+            <div class="check-box"></div>
+            <span>Optimize 3D Canvas Lerp Physics Engine</span>
+          </div>
+          <div class="delete-btn" onclick="deleteTask(event, this)">✕</div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="task-item" onclick="toggleTask(this)">
+          <div class="task-left">
+            <div class="check-box"></div>
+            <span>Submit QuizOff 2026 AI Certification Results</span>
+          </div>
+          <div class="delete-btn" onclick="deleteTask(event, this)">✕</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: KEY PRODUCTIVITY FEATURES -->
+  <section class="section-container">
+    <div class="hero-tag">PRODUCTIVITY SPECIFICATIONS</div>
+    <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">WHY TASKFLOW WORKS</h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <div class="feature-title">LOCAL STORAGE</div>
+        <div class="feature-desc">All task states are instantly serialized and saved in browser LocalStorage across sessions.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <div class="feature-title">PRIORITY TAGGING</div>
+        <div class="feature-desc">Color-coded badges for High, Medium, and Low urgency task prioritization.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">PROGRESS ANALYTICS</div>
+        <div class="feature-desc">Dynamic visual progress bar calculating real-time completion percentage.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <div class="feature-title">DARK NEON UI</div>
+        <div class="feature-desc">High-contrast dark mode layout designed for reduced eye strain during extended work hours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: ARCHITECTURE & TECH SPECS -->
+  <section class="section-container">
+    <div class="hero-tag">TECHNICAL ARCHITECTURE</div>
+    <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">STATE MANAGEMENT SPECS</h2>
+
+    <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="feature-card">
+        <div class="feature-title" style="color: var(--bright-red);">REACT STATE ENGINE</div>
+        <div class="feature-desc">Utilizes array immutability and state reducer logic for seamless item addition, toggling, and deletion.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title" style="color: var(--bright-red);">LOCALSTORAGE JSON</div>
+        <div class="feature-desc">Automatic JSON serialization (`JSON.stringify` / `JSON.parse`) for offline task persistence.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title" style="color: var(--bright-red);">FAST EVENT HANDLING</div>
+        <div class="feature-desc">Delegated click event listeners ensuring instant 60fps UI updates without layout reflow lag.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="font-weight: 800; font-size: 14px;">A. AHAD</div>
+    <ul class="social-links">
+      <li><a href="https://github.com/Ahad2356" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/abdul-ahad-45b369300" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="https://youtube.com/@aahad2300?si=NTocVwvZBQEog1ra" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+      <li><a href="https://www.instagram.com/abdul36847?stkn=MXV6NmVjOHkxeWlkNA==" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+      <li><a href="https://www.facebook.com/share/1EVwwYp1iX/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+      <li><a href="http://t.me/AAhad32" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+      <li><a href="https://wa.me/qr/6OEY44RSXBNHB1" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+    </ul>
+    <div style="font-size: 11px; color: var(--text-muted);">© 2025 Abdul Ahad. All rights reserved.</div>
+  </footer>
+
+  <script>
+    function updateProgress() {
+      const items = document.querySelectorAll('.task-item');
+      const completed = document.querySelectorAll('.task-item.completed');
+      
+      const total = items.length;
+      const done = completed.length;
+      const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      document.getElementById('taskStatsText').textContent = `${done} of ${total} tasks completed`;
+      document.getElementById('taskProgressFill').style.width = percent + '%';
+    }
+
+    function toggleTask(element) {
+      element.classList.toggle('completed');
+      const box = element.querySelector('.check-box');
+      box.textContent = element.classList.contains('completed') ? '✓' : '';
+      updateProgress();
+    }
+
+    function deleteTask(event, element) {
+      event.stopPropagation();
+      const taskItem = element.closest('.task-item');
+      taskItem.remove();
+      updateProgress();
+    }
+
+    function addNewTask() {
+      const input = document.getElementById('newTaskInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('taskListContainer');
+      const div = document.createElement('div');
+      div.className = 'task-item';
+      div.onclick = function() { toggleTask(div); };
+
+      div.innerHTML = `
+        <div class="task-left">
+          <div class="check-box"></div>
+          <span>${text}</span>
+        </div>
+        <div class="delete-btn" onclick="deleteTask(event, this)">✕</div>
+      `;
+
+      container.appendChild(div);
+      input.value = '';
+      updateProgress();
+    }
+  </script>
+</body>
+</html>
