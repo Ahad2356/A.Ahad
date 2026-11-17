@@ -19,23 +19,15 @@ dist-ssr/
 # Editor & OS files
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 .DS_Store
 Thumbs.db
 
 # Vite cache
 .vite/
 
-# Temporary video, PDFs, and scratch artifacts in root
+# Temporary media & scratch files
 *.mp4
-*.pdf
-/screencapture-*.png
-/screencapture-*.pdf
-/output/
-/scratch/
-/.venv/
-/public/
+screencapture-*
+scratch/
+output/
+.venv/
