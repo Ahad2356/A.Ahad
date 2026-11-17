@@ -25,7 +25,7 @@ export default function DeveloperShowcase() {
   };
 
   return (
-    <div className="dev-showcase-wrap">
+    <div className="dev-showcase-wrap" data-b="box">
       <div
         ref={cardRef}
         className="dev-terminal-card"

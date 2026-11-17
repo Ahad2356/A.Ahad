@@ -14,10 +14,10 @@ export default function Services() {
   return (
     <div className="services-page-wrapper">
       {/* Page Hero */}
-      <section className="section-container page-hero">
-        <div className="hero-tag">DEVELOPMENT SERVICES</div>
-        <h1 className="hero-title">WHAT WE BUILD & DELIVER</h1>
-        <p className="hero-subtext">
+      <section className="section-container page-hero" data-block>
+        <div className="hero-tag" data-b="text">DEVELOPMENT SERVICES</div>
+        <h1 className="hero-title" data-b="text">WHAT WE BUILD & DELIVER</h1>
+        <p className="hero-subtext" data-b="text">
           Transforming complex digital requirements into high-performance, responsive web applications engineered with clean code and modern aesthetics.
         </p>
 
@@ -26,6 +26,7 @@ export default function Services() {
             href="/Abdul_Ahad_Resume.pdf"
             download="Abdul_Ahad_Resume.pdf"
             className="btn-cv"
+            data-b="box"
           >
             <FiDownload />
             <span>DOWNLOAD MY CV / RESUME</span>
@@ -35,15 +36,15 @@ export default function Services() {
 
       {/* Services Grid */}
       <section className="section-container" style={{ paddingTop: 0 }}>
-        <div className="services-grid">
+        <div className="services-grid" data-block>
           {servicesData.map((svc) => (
-            <div key={svc.id} className="service-card">
+            <div key={svc.id} className="service-card" data-b="box">
               <div>
                 <div className="service-icon">💻</div>
-                <h3 className="service-title">{svc.title}</h3>
-                <p className="service-desc">{svc.description}</p>
+                <h3 className="service-title" data-b="text">{svc.title}</h3>
+                <p className="service-desc" data-b="text">{svc.description}</p>
               </div>
-              <ul className="service-bullets">
+              <ul className="service-bullets" data-b="box">
                 {svc.deliverables.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -54,18 +55,18 @@ export default function Services() {
       </section>
 
       {/* Development Process Workflow */}
-      <section className="section-container">
-        <div className="hero-tag">DEVELOPMENT PROCESS</div>
-        <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
+      <section className="section-container" data-block>
+        <div className="hero-tag" data-b="text">DEVELOPMENT PROCESS</div>
+        <h2 data-b="text" style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
           HOW WE WORK TOGETHER
         </h2>
 
         <div className="workflow-grid">
           {workflowSteps.map((step) => (
-            <div key={step.step} className="workflow-card">
-              <div className="step-num">{step.step}</div>
-              <div className="step-title">{step.title}</div>
-              <div className="step-desc">{step.desc}</div>
+            <div key={step.step} className="workflow-card" data-b="box">
+              <div className="step-num" data-b="box">{step.step}</div>
+              <div className="step-title" data-b="text">{step.title}</div>
+              <div className="step-desc" data-b="text">{step.desc}</div>
             </div>
           ))}
         </div>
@@ -73,9 +74,9 @@ export default function Services() {
 
       {/* CTA Banner */}
       <section className="section-container">
-        <div className="cta-banner">
-          <h2 className="cta-title">READY TO START YOUR NEXT PROJECT?</h2>
-          <p className="cta-desc">
+        <div className="cta-banner" data-block data-b="box">
+          <h2 className="cta-title" data-b="text">READY TO START YOUR NEXT PROJECT?</h2>
+          <p className="cta-desc" data-b="text">
             Whether you need a full stack web application, a WordPress site, or a custom frontend tool, let's turn your vision into reality.
           </p>
           <a
@@ -83,6 +84,7 @@ export default function Services() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-action"
+            data-b="box"
           >
             <FaWhatsapp style={{ fontSize: '16px' }} />
             <span>CHAT ON WHATSAPP</span>

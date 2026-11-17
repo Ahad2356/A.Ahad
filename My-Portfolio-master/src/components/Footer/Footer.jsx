@@ -5,15 +5,15 @@ import './Footer.css';
 
 export default function Footer() {
   return (
-    <footer id="footer">
-      <div className="footer-logo">
+    <footer id="footer" data-block data-b="box" data-finale>
+      <div className="footer-logo" data-b="box">
         <span className="brand-icon" style={{ width: '24px', height: '24px', fontSize: '11px' }}>
           A
         </span>
         <span>A. AHAD</span>
       </div>
 
-      <ul className="social-links" aria-label="Social Media Links">
+      <ul className="social-links" aria-label="Social Media Links" data-b="box">
         <li>
           <a href="https://github.com/Ahad2356" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <FiGithub />
@@ -58,7 +58,7 @@ export default function Footer() {
         </li>
       </ul>
 
-      <div className="copy-text">© 2025 Abdul Ahad. All rights reserved.</div>
+      <div className="copy-text" data-b="text">© 2025 Abdul Ahad. All rights reserved.</div>
     </footer>
   );
 }

@@ -7,6 +7,92 @@ import project3Img from '../assets/images/project3.jpg';
 
 export const projects = [
   {
+    id: 'lhs-cut',
+    title: 'LHS Cut',
+    tagline: 'Modern Digital Experience for Hair & Beauty Styling',
+    subtitle: 'Dual-Experience Salon & Grooming Platform',
+    category: 'Barbershop / Hair Salon',
+    description: 'Modern digital presence for a professional hair and beauty salon in Gulshan‑e‑Ravi, Lahore. Features an interactive dual-experience switcher between Hair Salon and Beauty Salon services, responsive gallery showcase, and instant booking connectivity.',
+    overview: 'LHS Cut is a premier hair and beauty grooming destination in Lahore. This modern web experience was engineered with React and Vite to present two distinct salon divisions under one unified digital brand: a specialized Hair Salon experience for precision cuts and styling, and a dedicated Beauty Salon experience for modern skin and facial care.',
+    image: '/images/projects/lhs_hair.webp',
+    featured: true,
+    liveUrl: 'https://lhs-cut.vercel.app/',
+    detailsPath: '/projects/lhs-cut',
+    role: 'Lead Frontend Developer & UI Designer',
+    timeline: '2025 – 2026',
+    status: 'Live & Active',
+    experiences: [
+      {
+        id: 'hair',
+        label: 'Hair Experience',
+        preview: '/images/projects/lhs_hair.webp',
+      },
+      {
+        id: 'beauty',
+        label: 'Beauty Experience',
+        preview: '/images/projects/lhs_beauty.webp',
+      },
+    ],
+    technologies: ['React.js', 'Vite', 'CSS3 Modern Layouts', 'Responsive WebP', 'Vercel Deployment'],
+    features: [
+      'Interactive Experience Switcher: Seamless toggling between Hair and Beauty salon portfolios without page reloads',
+      'Dual Experience Portfolios: Dedicated service listings and pricing for precision haircuts and beauty treatments',
+      'High-Speed WebP Visuals: Retina-ready optimized imagery providing fast loading times on desktop and mobile',
+      '100% Fluid Mobile Layout: Tailored responsive layout for mobile appointment booking and salon consultations',
+      'Direct WhatsApp Booking: Instant integration with salon reservation desk for rapid client conversions'
+    ]
+  },
+  {
+    id: 'pioneer-solar',
+    title: 'Pioneer Solar Energy',
+    tagline: 'Clean Sustainable Energy & Solar Power Solutions',
+    subtitle: 'Commercial & Residential Solar Consultation Portal',
+    category: 'Solar Energy / Business Website',
+    description: 'Professional business platform for a green solar energy enterprise. Features comprehensive service packages, residential/commercial solar calculators, client consultation forms, and project galleries.',
+    overview: 'Pioneer Solar Energy provides turnkey solar energy design, installation, and maintenance across residential and industrial sectors. The platform was engineered to clearly convey renewable energy returns on investment, system specifications, and client consultation workflows with a high-converting corporate design.',
+    image: '/images/projects/pioneer.webp',
+    featured: true,
+    liveUrl: 'https://pioneer-solar-energy.vercel.app/',
+    detailsPath: '/projects/pioneer-solar',
+    role: 'Frontend & Web Developer',
+    timeline: '2025',
+    status: 'Live & Active',
+    technologies: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Mobile-First UI', 'Vercel Deployment'],
+    features: [
+      'Solar Solutions Showcase: In-depth breakdowns of on-grid, off-grid, and hybrid renewable energy systems',
+      'Instant Quote Consultation: Interactive inquiry forms connecting prospective clients to engineering teams',
+      'High-Contrast Visual Hierarchy: Clean corporate branding tailored for green technology and corporate trust',
+      'Cross-Device Performance: Rapid asset delivery ensuring instant paint times across all network speeds',
+      'Structured Semantic SEO: On-page optimization for renewable energy inquiries and local commercial searches'
+    ]
+  },
+  {
+    id: '32-dental',
+    title: '32 Dental Clinic & Implant Center',
+    tagline: 'Advanced Dentistry, Oral Surgery & Implant Specialists',
+    subtitle: 'Modern Healthcare & Dental Clinic Web Platform',
+    category: 'Healthcare / Dental Website',
+    description: 'Full-featured medical website for a premier dental clinic and implant center in Lahore. Showcases dental services, doctor credentials, patient hygiene standards, and online consultation scheduling.',
+    overview: '32 Dental Clinic & Implant Center is a specialized oral health institution. The digital platform provides patients with an accessible, calming medical interface showcasing advanced implantology, cosmetic dentistry, sterilization protocols, and direct doctor appointment bookings.',
+    image: '/images/projects/dental.webp',
+    featured: true,
+    liveUrl: 'https://32-dental.vercel.app/',
+    detailsPath: '/projects/32-dental',
+    role: 'Frontend Developer & UI Specialist',
+    timeline: '2025 – 2026',
+    status: 'Live & Active',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Grid', 'Vercel Deployment'],
+    features: [
+      'Comprehensive Treatment Catalog: Detailed overviews of dental implants, smile makeovers, and orthodontic care',
+      'Patient Appointment Pipeline: Streamlined direct communication for patient intake and consultations',
+      'Clean Medical Aesthetic: Trust-inspiring healthcare palette with accessible typography and high readability',
+      'Interactive Clinic Tour: Visual presentation of sterile clinical environments and surgical equipment',
+      'Mobile Fast-Dial Integration: One-tap emergency phone and WhatsApp consultation buttons'
+    ]
+  },
+  // other projects remain unchanged – will be appended below
+
+  {
     id: 'insiteverse',
     title: 'InsiteVerse',
     tagline: 'The Modern Journal of Ideas, Culture & Technology',

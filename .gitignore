@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production & Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Environment variables & secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# Editor & OS files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Vite cache
+.vite/
+
+# Temporary video, PDFs, and scratch artifacts in root
+*.mp4
+*.pdf
+/screencapture-*.png
+/screencapture-*.pdf
+/output/
+/scratch/
+/.venv/
+/public/

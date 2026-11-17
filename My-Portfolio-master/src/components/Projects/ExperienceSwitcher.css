@@ -1,0 +1,34 @@
+/* ExperienceSwitcher styling — matches portfolio dark theme */
+.experience-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.exp-tab {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.exp-tab.active {
+  background: rgba(255, 42, 75, 0.2);
+  border-color: rgba(255, 42, 75, 0.6);
+  color: #ff6b8a;
+}
+
+.exp-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+

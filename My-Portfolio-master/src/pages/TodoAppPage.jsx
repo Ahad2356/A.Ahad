@@ -71,9 +71,9 @@ export default function TodoAppPage() {
   return (
     <div className="todo-page-wrapper">
       {/* Hero Section */}
-      <section className="section-container page-hero">
+      <section className="section-container page-hero" data-block data-b="box">
         <div className="hero-tag">INTERACTIVE UTILITY DEMO</div>
-        <h1 className="hero-title">TASKFLOW TODO APPLICATION</h1>
+        <h1 className="hero-title" data-b="text">TASKFLOW TODO APPLICATION</h1>
         <p className="hero-subtext">
           An ultra-responsive task management dashboard engineered for high daily productivity, category tags, priority tracking, and local storage data persistence.
         </p>
@@ -95,7 +95,7 @@ export default function TodoAppPage() {
       </section>
 
       {/* Interactive Live Widget */}
-      <section className="section-container" style={{ paddingTop: 0 }}>
+      <section className="section-container" style={{ paddingTop: 0 }} data-block data-b="box">
         <div className="todo-app-card">
           <form className="todo-input-row" onSubmit={addTask}>
             <input
@@ -159,35 +159,35 @@ export default function TodoAppPage() {
       </section>
 
       {/* Productivity Specs */}
-      <section className="section-container">
+      <section className="section-container" data-block data-b="box">
         <div className="hero-tag">PRODUCTIVITY SPECIFICATIONS</div>
         <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
           WHY TASKFLOW WORKS
         </h2>
 
         <div className="features-grid">
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">💾</div>
             <h3 className="feature-title">LOCAL STORAGE JSON</h3>
             <p className="feature-desc">
               All task states are instantly serialized and saved in browser LocalStorage across sessions.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">🏷️</div>
             <h3 className="feature-title">PRIORITY TAGGING</h3>
             <p className="feature-desc">
               Color-coded visual styling for urgent and pending task completion tracking.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">📈</div>
             <h3 className="feature-title">PROGRESS ANALYTICS</h3>
             <p className="feature-desc">
               Dynamic visual progress bar calculating real-time completion percentages.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">🌙</div>
             <h3 className="feature-title">DARK NEON UI</h3>
             <p className="feature-desc">

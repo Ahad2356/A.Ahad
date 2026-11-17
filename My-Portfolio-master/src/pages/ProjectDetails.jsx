@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FiArrowLeft, FiArrowUpRight, FiCheckCircle, FiExternalLink, FiGithub, FiPlay } from 'react-icons/fi';
 import { projects } from '../data/projects';
+import ExperienceSwitcher from '../components/Projects/ExperienceSwitcher';
 import Footer from '../components/Footer/Footer';
 import './ProjectDetails.css';
 
@@ -9,10 +10,15 @@ export default function ProjectDetails() {
   const { id } = useParams();
   const project = projects.find((p) => p.id === id);
 
+  const [previewSrc, setPreviewSrc] = useState(
+    project?.experiences ? project.experiences[0].preview : project?.image
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (project) {
       document.title = `${project.title} | Case Study | A. AHAD`;
+      setPreviewSrc(project.experiences ? project.experiences[0].preview : project.image);
     }
   }, [project]);
 
@@ -38,8 +44,8 @@ export default function ProjectDetails() {
   return (
     <div className="details-page-wrapper">
       {/* Hero Header */}
-      <section className="section-container details-hero">
-        <div className="details-breadcrumb">
+      <section className="section-container details-hero" data-block>
+        <div className="details-breadcrumb" data-b="box">
           <Link to="/">HOME</Link>
           <span>/</span>
           <Link to="/projects">PROJECTS</Link>
@@ -49,49 +55,60 @@ export default function ProjectDetails() {
 
         <div className="details-title-row">
           <div>
-            <div className="hero-tag">{project.category}</div>
-            <h1 className="details-main-title">{project.title}</h1>
+            <div className="hero-tag" data-b="text">{project.category}</div>
+            <h1 className="details-main-title" data-b="text">{project.title}</h1>
           </div>
         </div>
 
-        <div className="details-tagline">{project.tagline}</div>
+        <div className="details-tagline" data-b="text">{project.tagline}</div>
 
         {/* Project Metadata Ribbon */}
         <div className="details-meta-bar">
-          <div className="meta-item">
+          <div className="meta-item" data-b="box">
             <label>ROLE / CONTRIBUTION</label>
             <span>{project.role}</span>
           </div>
-          <div className="meta-item">
+          <div className="meta-item" data-b="box">
             <label>TIMELINE</label>
             <span>{project.timeline}</span>
           </div>
-          <div className="meta-item">
+          <div className="meta-item" data-b="box">
             <label>STATUS</label>
             <span style={{ color: 'var(--bright-red)' }}>{project.status}</span>
           </div>
         </div>
 
         {/* Big Showcase Image */}
-        <div className="details-image-showcase">
-          <img src={project.image} alt={project.title} loading="eager" decoding="async" />
+        <div className="details-image-showcase" data-b="box">
+          <img src={previewSrc || project.image} alt={project.title} loading="eager" decoding="async" />
         </div>
 
+        {/* Experience Switcher if multiple experiences exist */}
+        {project.experiences && (
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0 32px' }}>
+            <ExperienceSwitcher
+              experiences={project.experiences}
+              onSelect={(src) => setPreviewSrc(src)}
+              activePreview={previewSrc}
+            />
+          </div>
+        )}
+
         {/* Main Content & Specs Grid */}
-        <div className="details-content-grid">
+        <div className="details-content-grid" data-block>
           {/* Left Column: Narrative & Features */}
           <div className="details-left">
-            <div className="details-overview-card">
-              <h2 className="details-section-title">PROJECT OVERVIEW</h2>
-              <p className="details-overview-text">{project.overview}</p>
-              <p className="details-overview-text">{project.description}</p>
+            <div className="details-overview-card" data-b="box">
+              <h2 className="details-section-title" data-b="text">PROJECT OVERVIEW</h2>
+              <p className="details-overview-text" data-b="text">{project.overview}</p>
+              <p className="details-overview-text" data-b="text">{project.description}</p>
             </div>
 
-            <div className="details-overview-card">
-              <h2 className="details-section-title">KEY HIGHLIGHTS & ARCHITECTURE</h2>
+            <div className="details-overview-card" data-b="box">
+              <h2 className="details-section-title" data-b="text">KEY HIGHLIGHTS & ARCHITECTURE</h2>
               <div className="details-features-list">
                 {project.features.map((feature, idx) => (
-                  <div key={idx} className="details-feature-item">
+                  <div key={idx} className="details-feature-item" data-b="box">
                     <FiCheckCircle className="feature-check-icon" />
                     <span>{feature}</span>
                   </div>
@@ -102,14 +119,14 @@ export default function ProjectDetails() {
 
           {/* Right Column: Tech Specs & Primary CTA */}
           <div className="details-right">
-            <div className="details-sidebar-card">
+            <div className="details-sidebar-card" data-b="box">
               <div>
                 <label className="section-sub" style={{ display: 'block', marginBottom: '8px' }}>
                   TECHNOLOGY STACK
                 </label>
                 <div className="tech-stack-pills">
                   {project.technologies.map((tech, idx) => (
-                    <span key={idx} className="tech-badge-large">
+                    <span key={idx} className="tech-badge-large" data-b="box">
                       {tech}
                     </span>
                   ))}
@@ -117,7 +134,7 @@ export default function ProjectDetails() {
               </div>
 
               {/* Action Buttons */}
-              <div className="details-cta-box">
+              <div className="details-cta-box" data-b="box">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
@@ -154,7 +171,7 @@ export default function ProjectDetails() {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="details-bottom-nav">
+        <div className="details-bottom-nav" data-block data-b="box">
           <Link to="/projects" className="btn-secondary">
             <FiArrowLeft />
             <span>BACK TO ALL PROJECTS</span>

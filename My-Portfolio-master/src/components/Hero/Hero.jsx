@@ -10,25 +10,25 @@ export default function Hero() {
     <section className="section-container hero-section">
       <div className="hero-grid">
         {/* Left Hero Content */}
-        <div className="hero-left">
-          <div className="script-intro">Hello, I am</div>
-          <h1 className="hero-name">ABDUL <span className="hero-name-accent">AHAD</span></h1>
-          <div className="hero-subtitle-bar">
+        <div className="hero-left" data-block>
+          <div className="script-intro" data-b="text">Hello, I am</div>
+          <h1 className="hero-name" data-b="box">ABDUL <span className="hero-name-accent">AHAD</span></h1>
+          <div className="hero-subtitle-bar" data-b="text">
             FULL STACK DEVELOPER | WEB DEVELOPER | WORDPRESS DEVELOPER
           </div>
-          <p className="hero-bio">
+          <p className="hero-bio" data-b="text">
             I'm Abdul Ahad, a Computer Science student and aspiring Full Stack Developer focused on building responsive,
             modern and user-friendly digital experiences.
           </p>
 
-          <div className="floating-lines-container" aria-hidden="true">
+          <div className="floating-lines-container" aria-hidden="true" data-b="box">
             <div className="floating-line line-1" />
             <div className="floating-line line-2" />
             <div className="floating-line line-3" />
           </div>
 
-          <div className="hero-cta-btns">
-            <Link to="/projects" className="btn-primary">
+          <div className="hero-cta-btns" data-b="box">
+            <Link to="/projects" className="btn-primary" data-b="box">
               <span>EXPLORE MY WORK</span>
               <FiArrowUpRight style={{ fontSize: '14px' }} />
             </Link>
@@ -36,7 +36,7 @@ export default function Hero() {
               href="https://www.linkedin.com/in/abdul-ahad-45b369300"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary"
+              className="btn-secondary" data-b="box"
             >
               <span>LET'S CONNECT</span>
               <FiArrowUpRight style={{ fontSize: '14px' }} />
@@ -44,37 +44,37 @@ export default function Hero() {
             <a
               href="/Abdul_Ahad_Resume.pdf"
               download="Abdul_Ahad_Resume.pdf"
-              className="btn-cv"
+              className="btn-cv" data-b="box"
             >
               <FiDownload style={{ fontSize: '14px' }} />
               <span>DOWNLOAD CV</span>
             </a>
           </div>
 
-          <div className="tech-badges-row">
-            <div className="tech-pill">
+          <div className="tech-badges-row" data-b="box">
+            <div className="tech-pill" data-b="box">
               <FaReact style={{ color: '#61dafb', fontSize: '14px' }} />
               <span>React</span>
             </div>
-            <div className="tech-pill">
+            <div className="tech-pill" data-b="box">
               <FaJs style={{ color: '#f7df1e', fontSize: '14px' }} />
               <span>JavaScript</span>
             </div>
-            <div className="tech-pill">
+            <div className="tech-pill" data-b="box">
               <FaWordpress style={{ color: '#21759b', fontSize: '14px' }} />
               <span>WordPress</span>
             </div>
-            <div className="tech-pill">
+            <div className="tech-pill" data-b="box">
               <FaHtml5 style={{ color: '#e34f26', fontSize: '14px' }} />
               <span>HTML5</span>
             </div>
-            <div className="tech-pill">
+            <div className="tech-pill" data-b="box">
               <FaCss3Alt style={{ color: '#1572b6', fontSize: '14px' }} />
               <span>CSS3</span>
             </div>
           </div>
 
-          <div className="hero-location">
+          <div className="hero-location" data-b="box">
             <FiMapPin style={{ color: 'var(--bright-red)' }} />
             <span>LAHORE, PAKISTAN</span>
           </div>
@@ -84,10 +84,10 @@ export default function Hero() {
         </div>
 
         {/* Right Hero: Quick Info Panel */}
-        <div className="quick-info-card">
-          <div className="quick-info-header">QUICK INFO</div>
+        <div className="quick-info-card" data-block data-b="box">
+          <div className="quick-info-header" data-b="text">QUICK INFO</div>
 
-          <div className="info-item">
+          <div className="info-item" data-b="box">
             <div className="info-icon">
               <FiBookOpen />
             </div>
@@ -101,7 +101,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="info-item">
+          <div className="info-item" data-b="box">
             <div className="info-icon">
               <FiMapPin />
             </div>
@@ -111,7 +111,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="info-item">
+          <div className="info-item" data-b="box">
             <div className="info-icon">
               <FiCode />
             </div>
@@ -122,7 +122,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="info-item">
+          <div className="info-item" data-b="box">
             <div className="info-icon">
               <FaRobot />
             </div>
@@ -132,7 +132,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="achievement-card">
+          <div className="achievement-card" data-b="box">
             <div className="achievement-header">
               <FiAward style={{ fontSize: '14px' }} />
               <span>ACHIEVEMENT</span>

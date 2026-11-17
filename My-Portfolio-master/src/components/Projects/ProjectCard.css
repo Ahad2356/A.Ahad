@@ -40,21 +40,73 @@
 
 .project-img-wrapper {
   width: 100%;
-  height: 200px;
+  height: 230px;
   overflow: hidden;
-  background: #000000;
+  background: #09090f;
   position: relative;
+  cursor: pointer;
 }
 
 .project-img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: transform var(--transition-smooth);
 }
 
 .project-card:hover .project-img-wrapper img {
-  transform: scale(1.06);
+  transform: scale(1.05);
+}
+
+/* Image Hover Overlay with Expand Badge */
+.project-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 5, 8, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.expand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--bright-red);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 16px rgba(255, 42, 75, 0.4);
+  transform: translateY(6px);
+  transition: transform 0.25s ease;
+}
+
+.project-card:hover .project-img-overlay,
+.project-card-mini:hover .project-img-overlay {
+  opacity: 1;
+}
+
+.project-card:hover .expand-badge,
+.project-card-mini:hover .expand-badge {
+  transform: translateY(0);
+}
+
+/* Switcher for Full Card */
+.project-card-switcher {
+  background: rgba(13, 13, 20, 0.95);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 14px;
+  display: flex;
+  justify-content: center;
 }
 
 .project-card-body {
@@ -167,18 +219,31 @@
 
 .project-mini-img {
   width: 100%;
-  height: 130px;
+  height: 180px;
   overflow: hidden;
-  background: #000;
+  background: #09090f;
+  position: relative;
+  cursor: pointer;
 }
 .project-mini-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: transform var(--transition-smooth);
 }
 .project-card-mini:hover .project-mini-img img {
-  transform: scale(1.06);
+  transform: scale(1.05);
+}
+
+/* Switcher sits between image and body — never clipped */
+.project-mini-switcher {
+  background: rgba(13, 13, 20, 0.95);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 6px 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .project-mini-body {
@@ -209,11 +274,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+}
+
+.project-mini-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .arrow-circle {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid rgba(255, 42, 75, 0.4);
   color: var(--bright-red);
@@ -225,7 +297,8 @@
   transition: all var(--transition-fast);
   text-decoration: none;
 }
-.project-card-mini:hover .arrow-circle {
+.arrow-circle:hover,
+.project-card-mini:hover .arrow-circle:last-child {
   background: var(--bright-red);
   color: #ffffff;
 }

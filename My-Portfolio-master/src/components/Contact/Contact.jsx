@@ -28,22 +28,22 @@ export default function Contact() {
 
   return (
     <section className="section-container" id="contact">
-      <div className="section-title-wrap">
-        <div className="section-tag">CONTACT ME</div>
-        <div className="section-sub">LET'S BUILD SOMETHING GREAT</div>
+      <div className="section-title-wrap" data-block>
+        <div className="section-tag" data-b="text">CONTACT ME</div>
+        <div className="section-sub" data-b="text">LET'S BUILD SOMETHING GREAT</div>
       </div>
 
       <div className="contact-main-grid">
         {/* Info Column */}
-        <div className="contact-card-info">
-          <a href="tel:+923038702170" className="contact-item-row">
+        <div className="contact-card-info" data-block data-b="box">
+          <a href="tel:+923038702170" className="contact-item-row" data-b="box">
             <div className="contact-icon-box">
               <FiPhone />
             </div>
             <span>+92 303 8702170</span>
           </a>
 
-          <a href="mailto:ii0555431@gmail.com" className="contact-item-row">
+          <a href="mailto:ii0555431@gmail.com" className="contact-item-row" data-b="box">
             <div className="contact-icon-box">
               <FiMail />
             </div>
@@ -55,6 +55,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className="contact-item-row"
+            data-b="box"
           >
             <div className="contact-icon-box">
               <FaWhatsapp />
@@ -62,7 +63,7 @@ export default function Contact() {
             <span>WhatsApp Me</span>
           </a>
 
-          <div className="contact-item-row">
+          <div className="contact-item-row" data-b="box">
             <div className="contact-icon-box">
               <FiMapPin />
             </div>
@@ -71,7 +72,7 @@ export default function Contact() {
         </div>
 
         {/* Contact Form Column */}
-        <form className="contact-form-card" onSubmit={handleSubmit}>
+        <form className="contact-form-card" onSubmit={handleSubmit} data-block data-b="box">
           <div className="form-row">
             <input
               type="text"
@@ -82,6 +83,7 @@ export default function Contact() {
               value={formData.name}
               onChange={handleChange}
               required
+              data-b="box"
             />
             <input
               type="email"
@@ -92,6 +94,7 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               required
+              data-b="box"
             />
           </div>
           <textarea
@@ -102,9 +105,10 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             required
+            data-b="box"
           />
 
-          <button type="submit" className="send-btn">
+          <button type="submit" className="send-btn" data-b="box">
             <FiSend />
             <span>SEND MESSAGE</span>
           </button>
@@ -118,12 +122,12 @@ export default function Contact() {
         </form>
 
         {/* Quote Column */}
-        <div className="quote-box">
+        <div className="quote-box" data-block data-b="box">
           <div className="quote-big-mark">“</div>
-          <p className="quote-msg">
+          <p className="quote-msg" data-b="text">
             Small steps every day lead to big results.
           </p>
-          <div className="quote-signature-wrap">
+          <div className="quote-signature-wrap" data-b="box">
             <div className="quote-script">Abdul Ahad</div>
           </div>
         </div>

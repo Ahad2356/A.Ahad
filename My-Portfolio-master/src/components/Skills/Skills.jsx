@@ -8,32 +8,32 @@ export default function Skills() {
     <section className="section-container">
       <div className="three-panel-grid">
         {/* Panel 1: Technologies & Tools */}
-        <div className="panel-card">
-          <div className="section-tag">SKILLS</div>
-          <div className="section-sub">TECHNOLOGIES & TOOLS</div>
+        <div className="panel-card" data-block data-b="box">
+          <div className="section-tag" data-b="text">SKILLS</div>
+          <div className="section-sub" data-b="text">TECHNOLOGIES & TOOLS</div>
 
           <div className="skills-cards-grid">
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FaReact className="skill-tile-icon" style={{ color: '#61dafb' }} />
               <span>React.js</span>
             </div>
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FaJs className="skill-tile-icon" style={{ color: '#f7df1e' }} />
               <span>JavaScript</span>
             </div>
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FaHtml5 className="skill-tile-icon" style={{ color: '#e34f26' }} />
               <span>HTML & CSS</span>
             </div>
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FaWordpress className="skill-tile-icon" style={{ color: '#21759b' }} />
               <span>WordPress</span>
             </div>
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FaGitAlt className="skill-tile-icon" style={{ color: '#f05032' }} />
               <span>Git & GitHub</span>
             </div>
-            <div className="skill-tile">
+            <div className="skill-tile" data-b="box">
               <FiLayers className="skill-tile-icon" style={{ color: '#ff1e3c' }} />
               <span>Responsive UI</span>
             </div>
@@ -41,30 +41,30 @@ export default function Skills() {
         </div>
 
         {/* Panel 2: Interests */}
-        <div className="panel-card">
-          <div className="section-tag">INTERESTS</div>
-          <div className="section-sub">WHAT I LOVE</div>
+        <div className="panel-card" data-block data-b="box">
+          <div className="section-tag" data-b="text">INTERESTS</div>
+          <div className="section-sub" data-b="text">WHAT I LOVE</div>
 
           <div className="interests-list">
-            <div className="interest-item">
+            <div className="interest-item" data-b="box">
               <div className="interest-icon">
                 <FaBrain />
               </div>
               <span>Artificial Intelligence</span>
             </div>
-            <div className="interest-item">
+            <div className="interest-item" data-b="box">
               <div className="interest-icon">
                 <FaShieldHalved />
               </div>
               <span>Cyber Security</span>
             </div>
-            <div className="interest-item">
+            <div className="interest-item" data-b="box">
               <div className="interest-icon">
                 <FaRobot />
               </div>
               <span>Robotics & IoT</span>
             </div>
-            <div className="interest-item">
+            <div className="interest-item" data-b="box">
               <div className="interest-icon">
                 <FiCode />
               </div>
@@ -74,12 +74,12 @@ export default function Skills() {
         </div>
 
         {/* Panel 3: Languages */}
-        <div className="panel-card">
-          <div className="section-tag">LANGUAGES</div>
-          <div className="section-sub">FLUENCY LEVEL</div>
+        <div className="panel-card" data-block data-b="box">
+          <div className="section-tag" data-b="text">LANGUAGES</div>
+          <div className="section-sub" data-b="text">FLUENCY LEVEL</div>
 
           <div className="lang-list">
-            <div className="lang-item">
+            <div className="lang-item" data-b="box">
               <div className="lang-item-header">
                 <label>Urdu</label>
                 <span>Native (100%)</span>
@@ -89,7 +89,7 @@ export default function Skills() {
               </div>
             </div>
 
-            <div className="lang-item">
+            <div className="lang-item" data-b="box">
               <div className="lang-item-header">
                 <label>Punjabi</label>
                 <span>Fluent (90%)</span>
@@ -99,7 +99,7 @@ export default function Skills() {
               </div>
             </div>
 
-            <div className="lang-item">
+            <div className="lang-item" data-b="box">
               <div className="lang-item-header">
                 <label>English</label>
                 <span>Fluent (85%)</span>

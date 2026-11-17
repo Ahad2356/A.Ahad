@@ -24,10 +24,10 @@ export default function Projects() {
   return (
     <div className="projects-page-wrapper">
       {/* Page Hero */}
-      <section className="section-container page-hero">
-        <div className="hero-tag">OUR PORTFOLIO</div>
-        <h1 className="hero-title">FEATURED PROJECTS & WORK</h1>
-        <p className="hero-subtext">
+      <section className="section-container page-hero" data-block>
+        <div className="hero-tag" data-b="text">OUR PORTFOLIO</div>
+        <h1 className="hero-title" data-b="text">FEATURED PROJECTS & WORK</h1>
+        <p className="hero-subtext" data-b="text">
           Explore our collection of modern full stack applications, interactive web tools, and custom digital experiences
           engineered with React, JavaScript, and WordPress.
         </p>
@@ -37,6 +37,7 @@ export default function Projects() {
             href="/Abdul_Ahad_Resume.pdf"
             download="Abdul_Ahad_Resume.pdf"
             className="btn-cv"
+            data-b="box"
           >
             <FiDownload />
             <span>DOWNLOAD MY CV / RESUME</span>
@@ -67,16 +68,16 @@ export default function Projects() {
       </section>
 
       {/* Engineering Specs & Tech Matrix */}
-      <section className="section-container">
-        <div className="hero-tag">ENGINEERING SPECS</div>
-        <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
+      <section className="section-container" data-block>
+        <div className="hero-tag" data-b="text">ENGINEERING SPECS</div>
+        <h2 data-b="text" style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
           TECHNOLOGY MATRIX
         </h2>
 
         <div className="tech-matrix-grid">
-          <div className="matrix-card">
-            <div className="matrix-title">FRONTEND</div>
-            <ul className="matrix-list">
+          <div className="matrix-card" data-b="box">
+            <div className="matrix-title" data-b="text">FRONTEND</div>
+            <ul className="matrix-list" data-b="box">
               <li>React.js & Hooks</li>
               <li>JavaScript (ES6+)</li>
               <li>HTML5 & CSS3</li>
@@ -84,9 +85,9 @@ export default function Projects() {
             </ul>
           </div>
 
-          <div className="matrix-card">
-            <div className="matrix-title">BACKEND & CMS</div>
-            <ul className="matrix-list">
+          <div className="matrix-card" data-b="box">
+            <div className="matrix-title" data-b="text">BACKEND & CMS</div>
+            <ul className="matrix-list" data-b="box">
               <li>Node.js Essentials</li>
               <li>WordPress Customization</li>
               <li>Elementor Pro</li>
@@ -94,9 +95,9 @@ export default function Projects() {
             </ul>
           </div>
 
-          <div className="matrix-card">
-            <div className="matrix-title">TOOLS & DEVOPS</div>
-            <ul className="matrix-list">
+          <div className="matrix-card" data-b="box">
+            <div className="matrix-title" data-b="text">TOOLS & DEVOPS</div>
+            <ul className="matrix-list" data-b="box">
               <li>Git & GitHub</li>
               <li>VS Code Studio</li>
               <li>Local Storage & Cache</li>
@@ -104,9 +105,9 @@ export default function Projects() {
             </ul>
           </div>
 
-          <div className="matrix-card">
-            <div className="matrix-title">UI/UX & PERFORMANCE</div>
-            <ul className="matrix-list">
+          <div className="matrix-card" data-b="box">
+            <div className="matrix-title" data-b="text">UI/UX & PERFORMANCE</div>
+            <ul className="matrix-list" data-b="box">
               <li>Figma & Layout Mockups</li>
               <li>SEO Optimization</li>
               <li>Cross-Browser Testing</li>
@@ -118,22 +119,22 @@ export default function Projects() {
 
       {/* Impact Stats */}
       <section className="section-container">
-        <div className="stats-grid">
-          <div className="stat-box">
-            <div className="stat-number">100%</div>
-            <div className="stat-label">Responsive Precision</div>
+        <div className="stats-grid" data-block>
+          <div className="stat-box" data-b="box">
+            <div className="stat-number" data-b="text">100%</div>
+            <div className="stat-label" data-b="text">Responsive Precision</div>
           </div>
-          <div className="stat-box">
-            <div className="stat-number">5.25L+</div>
-            <div className="stat-label">QuizOff Participants</div>
+          <div className="stat-box" data-b="box">
+            <div className="stat-number" data-b="text">5.25L+</div>
+            <div className="stat-label" data-b="text">QuizOff Participants</div>
           </div>
-          <div className="stat-box">
-            <div className="stat-number">3+</div>
-            <div className="stat-label">Years Learning & Building</div>
+          <div className="stat-box" data-b="box">
+            <div className="stat-number" data-b="text">3+</div>
+            <div className="stat-label" data-b="text">Years Learning & Building</div>
           </div>
-          <div className="stat-box">
-            <div className="stat-number">24/7</div>
-            <div className="stat-label">Dedicated Commitment</div>
+          <div className="stat-box" data-b="box">
+            <div className="stat-number" data-b="text">24/7</div>
+            <div className="stat-label" data-b="text">Dedicated Commitment</div>
           </div>
         </div>
       </section>

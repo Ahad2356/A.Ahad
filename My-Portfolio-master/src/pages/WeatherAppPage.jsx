@@ -64,9 +64,9 @@ export default function WeatherAppPage() {
   return (
     <div className="weather-page-wrapper">
       {/* Section 1: Hero */}
-      <section className="section-container page-hero">
+      <section className="section-container page-hero" data-block data-b="box">
         <div className="hero-tag">INTERACTIVE DEMO & CASE STUDY</div>
-        <h1 className="hero-title">WEATHER PULSE APPLICATION</h1>
+        <h1 className="hero-title" data-b="text">WEATHER PULSE APPLICATION</h1>
         <p className="hero-subtext">
           Real-time atmospheric insights, meteorological conditions, and interactive multi-city weather forecasting built with React.
         </p>
@@ -88,7 +88,7 @@ export default function WeatherAppPage() {
       </section>
 
       {/* Section 2: Interactive Live Widget */}
-      <section className="section-container" style={{ paddingTop: 0 }}>
+      <section className="section-container" style={{ paddingTop: 0 }} data-block data-b="box">
         <div className="demo-widget-card">
           <form className="search-bar-row" onSubmit={handleSearchSubmit}>
             <input
@@ -166,35 +166,35 @@ export default function WeatherAppPage() {
       </section>
 
       {/* Section 3: App Capabilities */}
-      <section className="section-container">
+      <section className="section-container" data-block data-b="box">
         <div className="hero-tag">APP CAPABILITIES</div>
         <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '24px' }}>
           CORE WEATHER FEATURES
         </h2>
 
         <div className="features-grid">
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">⚡</div>
             <h3 className="feature-title">LIVE QUERY FEEDS</h3>
             <p className="feature-desc">
               Asynchronous data polling using REST APIs for responsive multi-city meteorological forecasting.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">📍</div>
             <h3 className="feature-title">GEOLOCATION MAPPING</h3>
             <p className="feature-desc">
               Structured location auto-lookup allowing instant atmospheric overview for key metropolitan hubs.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">📊</div>
             <h3 className="feature-title">DYNAMIC CLIMATE DATA</h3>
             <p className="feature-desc">
               Calculates humidity percentages, barometric pressure ratings, wind velocities, and solar UV indices.
             </p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" data-b="box">
             <div className="feature-icon">🎨</div>
             <h3 className="feature-title">HIGH-CONTRAST UI</h3>
             <p className="feature-desc">
