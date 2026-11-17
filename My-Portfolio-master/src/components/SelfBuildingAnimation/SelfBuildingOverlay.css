@@ -1,0 +1,478 @@
+/* =========================================================================
+   SELF-BUILDING WEBSITE ANIMATION STYLES
+   Matches Abdul Ahad's dark futuristic portfolio aesthetic
+   ========================================================================= */
+
+/* Stage Overlay: Covers the whole document, pointer-events none */
+#sb-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+#sb-stage.sb-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   AGENT CURSOR & MODES
+   ------------------------------------------------------------------------- */
+.sb-agent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sb-agent svg {
+  position: absolute;
+  overflow: visible;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.85));
+}
+
+.sb-agent .sb-arrow {
+  left: -2px;
+  top: -1px;
+  width: 18px;
+  height: 23px;
+  display: block;
+}
+
+.sb-agent .sb-cross,
+.sb-agent .sb-ibeam {
+  left: -9px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  display: none;
+}
+
+.sb-agent[data-mode="cross"] .sb-arrow,
+.sb-agent[data-mode="ibeam"] .sb-arrow {
+  display: none;
+}
+
+.sb-agent[data-mode="cross"] .sb-cross {
+  display: block;
+}
+
+.sb-agent[data-mode="ibeam"] .sb-ibeam {
+  display: block;
+}
+
+.sb-role-badge {
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 3px 7px 3px;
+  border-radius: 3px 8px 8px 8px;
+  color: #060508;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sb-agent[data-mode="cross"] .sb-role-badge,
+.sb-agent[data-mode="ibeam"] .sb-role-badge {
+  left: 12px;
+  top: 12px;
+}
+
+/* Click Shockwave Ring */
+.sb-ring {
+  position: absolute;
+  left: -16px;
+  top: -16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transform: scale(0.2);
+  pointer-events: none;
+}
+
+.sb-agent.click .sb-ring {
+  animation: sbClickRing 0.4s ease-out;
+}
+
+@keyframes sbClickRing {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   WIREFRAME BLUEPRINT BOUNDING BOX
+   ------------------------------------------------------------------------- */
+.sb-wire {
+  position: absolute;
+  border: 1px dashed rgba(255, 42, 75, 0.75);
+  background: rgba(255, 42, 75, 0.06);
+  pointer-events: none;
+  transition: opacity 0.2s, background 0.2s;
+  z-index: 1;
+}
+
+.sb-wire.edit {
+  border-color: rgba(61, 255, 176, 0.85);
+  background: rgba(61, 255, 176, 0.08);
+}
+
+.sb-wire.out {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* Corner Handles */
+.sb-wire u {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+  border: 1px solid var(--bright-red);
+}
+
+.sb-wire u:nth-child(1) { left: -3px; top: -3px; }
+.sb-wire u:nth-child(2) { right: -3px; top: -3px; }
+.sb-wire u:nth-child(3) { left: -3px; bottom: -3px; }
+.sb-wire u:nth-child(4) { right: -3px; bottom: -3px; }
+
+/* Dimensions Tag */
+.sb-wire em {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  transform: translateX(-50%);
+  background: rgba(18, 16, 26, 0.92);
+  border: 1px solid rgba(255, 42, 75, 0.4);
+  color: #ff6b8a;
+  font-family: monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-style: normal;
+  letter-spacing: 0.5px;
+}
+
+.sb-wire.sm em {
+  display: none;
+}
+
+/* -------------------------------------------------------------------------
+   PROGRESSIVE ELEMENT HIDING & REVEALING
+   ------------------------------------------------------------------------- */
+html.sb-building [data-block] {
+  opacity: 0.12;
+  filter: grayscale(1);
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+}
+
+html.sb-building [data-block].sb-resolved,
+html.sb-building [data-b].sb-resolved {
+  opacity: 1 !important;
+  filter: grayscale(0) !important;
+}
+
+html.sb-complete [data-block],
+html.sb-complete [data-b] {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+/* Typewriter characters */
+.sb-char {
+  opacity: 0;
+  display: inline-block;
+  transition: opacity 0.08s ease;
+}
+
+.sb-char.v {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   START BANNER (Top right / Center discreet chip)
+   ------------------------------------------------------------------------- */
+.sb-start-banner {
+  position: fixed;
+  top: 76px;
+  right: 24px;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(14, 13, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 42, 75, 0.35);
+  border-radius: var(--radius-full);
+  padding: 6px 14px 6px 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: sbSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sbSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sb-chip-monogram {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bright-red);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 13px;
+  box-shadow: 0 0 12px rgba(255, 42, 75, 0.6);
+}
+
+.sb-start-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sb-start-text strong {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sb-start-text span {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+.sb-btn-skip-intro {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: 0.8px;
+  transition: all 0.2s ease;
+}
+
+.sb-btn-skip-intro:hover {
+  background: var(--bright-red);
+  border-color: var(--bright-red);
+}
+
+/* -------------------------------------------------------------------------
+   DISCREET FLOATING HUD (Bottom Center)
+   ------------------------------------------------------------------------- */
+.sb-hud {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(14px, 2.8vh, 26px);
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 24px);
+  padding: 8px 12px 8px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(14, 13, 20, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 42, 75, 0.12);
+  font-size: 12px;
+  font-weight: 600;
+  color: #c9c8d3;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sb-hud.sb-hud-minimized {
+  opacity: 0.85;
+  transform: translateX(-50%) translateY(4px);
+}
+
+.sb-hud.sb-hud-minimized:hover {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Agent Avatar Dots */
+.sb-agent-dots {
+  display: flex;
+  align-items: center;
+}
+
+.sb-agent-dots span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: -5px;
+  border: 2px solid #0e0d14;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sb-agent-dots span:first-child {
+  margin-left: 0;
+}
+
+/* Progress bar */
+.sb-hud-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sb-counter {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: monospace;
+}
+
+.sb-progress-bar-bg {
+  width: clamp(50px, 8vw, 110px);
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.sb-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-orange), var(--bright-red));
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.sb-status-badge {
+  color: #e0e0ea;
+  font-size: 11.5px;
+  font-weight: 700;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* HUD Buttons */
+.sb-hud-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 28px;
+  min-width: 28px;
+  padding: 0 9px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.sb-hud-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.sb-hud-btn.sb-btn-primary {
+  background: var(--bright-red);
+  box-shadow: 0 0 12px rgba(255, 42, 75, 0.45);
+}
+
+.sb-hud-btn.sb-btn-primary:hover {
+  background: #ff4767;
+}
+
+.sb-hud-btn.active {
+  color: #ff6b8a;
+  background: rgba(255, 42, 75, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 42, 75, 0.5);
+}
+
+.sb-hud-btn.muted {
+  color: var(--text-muted);
+}
+
+.sb-btn-sublabel {
+  font-size: 10px;
+}
+
+.sb-skip-btn {
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 10.5px;
+  padding: 0 8px;
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE ADAPTATIONS
+   ------------------------------------------------------------------------- */
+@media (max-width: 820px) {
+  .sb-start-banner {
+    display: none;
+  }
+  .sb-status-badge {
+    display: none;
+  }
+  .sb-agent-dots {
+    display: none;
+  }
+  .sb-hud {
+    gap: 8px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sb-hud-progress {
+    display: none;
+  }
+  .sb-btn-sublabel {
+    display: none;
+  }
+  .sb-hud {
+    gap: 6px;
+    padding: 5px 8px;
+  }
+}
