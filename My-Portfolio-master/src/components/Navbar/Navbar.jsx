@@ -19,13 +19,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="header-bar" role="banner">
-        <Link to="/" className="brand-logo" aria-label="Abdul Ahad Portfolio Home">
+      <header className="header-bar" role="banner" data-block>
+        <Link to="/" className="brand-logo" aria-label="Abdul Ahad Portfolio Home" data-b="box">
           <span className="brand-icon">A</span>
           <span>A. AHAD</span>
         </Link>
 
-        <nav aria-label="Primary Navigation">
+        <nav aria-label="Primary Navigation" data-b="box">
           <ul className="nav-links">
             <li>
               <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
@@ -60,7 +60,7 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        <div className="nav-actions">
+        <div className="nav-actions" data-b="box">
           <a
             href="https://wa.me/qr/6OEY44RSXBNHB1"
             target="_blank"

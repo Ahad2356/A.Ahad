@@ -35,8 +35,8 @@ export default function FeaturedProjects() {
         </div>
 
         {/* Right Column: Certificates */}
-        <div>
-          <div className="section-title-wrap" data-block>
+        <div id="certificates">
+          <div className="section-title-wrap certs-heading-wrap" data-block>
             <div className="section-tag" data-b="text">CERTIFICATES</div>
             <div className="section-sub" data-b="text">MY ACHIEVEMENTS</div>
           </div>

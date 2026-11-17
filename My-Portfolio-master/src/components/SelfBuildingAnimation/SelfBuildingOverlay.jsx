@@ -7,6 +7,7 @@ import {
   FiVolumeX,
   FiFastForward,
   FiCompass,
+  FiArrowUpRight,
   FiX
 } from 'react-icons/fi';
 import { SelfBuildingEngine } from './SelfBuildingEngine';
@@ -41,22 +42,26 @@ export default function SelfBuildingOverlay() {
         setProgressPercent(Math.round(ratio * 100));
       },
       onStatus: (text) => setStatusText(text),
-      onStateChange: (newState) => setState(newState),
+      onStateChange: (newState) => {
+        setState(newState);
+        if (newState === 'building') {
+          setHasStarted(true);
+        }
+      },
       onLayersCount: (total) => setLayersCount((prev) => ({ ...prev, total }))
     });
 
     engineRef.current = engine;
 
-    // Brief timeout then start building automatically, or user can press Space
-    const timer = setTimeout(() => {
-      if (!hasStarted) {
-        setHasStarted(true);
-        engine.start();
+    // Safety: force completion if animation hasn't finished within 70 seconds
+    const safetyTimer = setTimeout(() => {
+      if (!engine.finished) {
+        engine.skip();
       }
-    }, 1100);
+    }, 70000);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(safetyTimer);
       engine.destroy();
     };
   }, []);
@@ -101,22 +106,49 @@ export default function SelfBuildingOverlay() {
       {/* Dynamic Construction Stage for 18 Agents & Wireframes */}
       <div id="sb-stage" ref={stageRef} aria-hidden="true" />
 
-      {/* Start Banner / Skip Chip for First-time visitors */}
-      {!hasStarted && (
-        <div className="sb-start-banner" role="status">
-          <div className="sb-chip-monogram">A</div>
-          <div className="sb-start-text">
-            <strong>Self-Building Portfolio</strong>
-            <span>18 Automated Agents Assembling Interface</span>
+      {/* Intro Experience Card (Option A: Start Experience ↗ | Option B: Skip Intro →) */}
+      {!hasStarted && state !== 'done' && (
+        <div className="sb-intro-card" role="dialog" aria-label="Website Animation Introduction">
+          <div className="sb-intro-header">
+            <div className="sb-intro-monogram">A</div>
+            <div className="sb-intro-headings">
+              <strong className="sb-intro-title">Self-Building Experience</strong>
+              <span className="sb-intro-desc">18 automated agents assemble this portfolio live</span>
+            </div>
           </div>
-          <button type="button" className="sb-btn-skip-intro" onClick={handleSkip}>
-            SKIP INTRO
-          </button>
+
+          <div className="sb-intro-actions">
+            <button
+              type="button"
+              className="sb-btn-start-exp"
+              onClick={handleStartOrToggle}
+              title="Start Full Website Animation (Space)"
+            >
+              <span>Start Experience</span>
+              <FiArrowUpRight style={{ fontSize: '13px' }} />
+            </button>
+
+            <button
+              type="button"
+              className="sb-btn-skip-intro"
+              onClick={handleSkip}
+              title="Skip Directly to Portfolio (Esc)"
+            >
+              <span>Skip Intro</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <div className="sb-intro-hints" aria-hidden="true">
+            <span><kbd>SPACE</kbd> Start</span>
+            <span className="sb-hint-dot">·</span>
+            <span><kbd>ESC</kbd> Skip</span>
+          </div>
         </div>
       )}
 
       {/* Floating Interactive Controls HUD */}
-      {hudVisible && (
+      {hudVisible && hasStarted && (
         <aside
           className={`sb-hud ${state === 'done' ? 'sb-hud-minimized' : ''}`}
           role="toolbar"
@@ -214,8 +246,8 @@ export default function SelfBuildingOverlay() {
               title="Skip Animation (Esc)"
               aria-label="Skip Animation"
             >
-              <span>Skip</span>
-              <FiX />
+              <span>Skip Intro</span>
+              <span style={{ fontSize: '12px' }}>→</span>
             </button>
           )}
         </aside>

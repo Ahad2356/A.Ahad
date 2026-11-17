@@ -281,7 +281,7 @@ export class SelfBuildingEngine {
           const dx = x - sx;
           const dy = y - sy;
           const dist = Math.hypot(dx, dy) || 1;
-          const dur = o.dur ?? clamp(180 + dist * 0.45, 200, 720);
+          const dur = o.dur ?? clamp(120 + dist * 0.3, 140, 480);
           const bend = o.straight ? 0 : rnd(-1, 1) * Math.min(130, dist * 0.28);
           const cx = (sx + x) / 2 - (dy / dist) * bend;
           const cy = (sy + y) / 2 + (dx / dist) * bend;
@@ -379,13 +379,38 @@ export class SelfBuildingEngine {
   }
 
   /* =========================================================================
-     PAGE BLOCKS & ITEM EXTRACTION
+     PAGE BLOCKS & ITEM EXTRACTION (ALL 8 SECTIONS ACROSS COMPLETE PORTFOLIO)
      ========================================================================= */
   discoverBlocks() {
     this.itemOf.clear();
-    const blockEls = [...this.container.querySelectorAll('[data-block]')];
+    
+    // Discover all data-blocks across both the navbar and page body
+    const allBlocks = [...document.querySelectorAll('[data-block]')];
 
-    this.blocks = blockEls.map((el) => {
+    // Order blocks semantically by portfolio flow:
+    // 01: Navbar (header.header-bar)
+    // 02: Hero (.hero-section)
+    // 03: About (#about)
+    // 04: Skills (.three-panel-grid, .panel-card)
+    // 05: Certificates (.certs-heading-wrap, .certs-stack, #certificates)
+    // 06: Featured Projects (#projects, .projects-trio)
+    // 07: Contact (#contact)
+    // 08: Footer (footer#footer)
+    const getSectionScore = (el) => {
+      if (el.matches('header.header-bar, .header-bar') || el.closest('.header-bar')) return 10;
+      if (el.closest('.hero-section')) return 20;
+      if (el.closest('#about')) return 30;
+      if (el.closest('.three-panel-grid') || el.matches('.panel-card')) return 40;
+      if (el.matches('.certs-heading-wrap, .certs-stack') || el.closest('#certificates')) return 50;
+      if (el.closest('#projects')) return 60;
+      if (el.closest('#contact')) return 70;
+      if (el.matches('footer#footer, footer') || el.closest('footer')) return 80;
+      return 90;
+    };
+
+    allBlocks.sort((a, b) => getSectionScore(a) - getSectionScore(b));
+
+    this.blocks = allBlocks.map((el) => {
       const itemEls = [el, ...el.querySelectorAll('[data-b]')].filter(
         (x) => x.hasAttribute('data-b') && x.closest('[data-block]') === el
       );
@@ -397,7 +422,7 @@ export class SelfBuildingEngine {
         return it;
       });
 
-      return { el, items, promise: null, fin: false };
+      return { el, score: getSectionScore(el), items, promise: null, fin: false };
     });
 
     this.totalItems = this.itemOf.size;
@@ -430,7 +455,7 @@ export class SelfBuildingEngine {
     const sx = agent.x;
     const sy = agent.y;
 
-    await this.tween(clamp(140 + Math.hypot(r.w, r.h) * 0.28, 170, 520), (k) => {
+    await this.tween(clamp(90 + Math.hypot(r.w, r.h) * 0.18, 110, 340), (k) => {
       const e = ease(k);
       agent.x = sx + r.w * e;
       agent.y = sy + r.h * e;
@@ -468,7 +493,7 @@ export class SelfBuildingEngine {
     const totalChars = spans.length;
     let revealed = 0;
 
-    await this.tween(clamp(totalChars * 14, 160, 920), (k) => {
+    await this.tween(clamp(totalChars * 9, 100, 600), (k) => {
       const upto = Math.round(k * totalChars);
       if (upto <= revealed) return;
       for (let i = revealed; i < upto; i++) {
@@ -507,23 +532,23 @@ export class SelfBuildingEngine {
       // Special interaction: If building the LHS Cut card, trigger Hair/Beauty tabs to demonstrate dual experience!
       const tabs = el.querySelectorAll('.exp-tab');
       if (tabs.length === 2) {
-        await this.wait(180);
+        await this.wait(100);
         const beautyTab = tabs[1];
         const btRect = rectOf(beautyTab);
-        await agent.moveTo(btRect.x + btRect.w / 2, btRect.y + btRect.h / 2, { dur: 260 });
+        await agent.moveTo(btRect.x + btRect.w / 2, btRect.y + btRect.h / 2, { dur: 170 });
         agent.click();
         beautyTab.click();
         this.pop(0.7);
-        await this.wait(400);
+        await this.wait(200);
 
         const hairTab = tabs[0];
         const htRect = rectOf(hairTab);
-        await agent.moveTo(htRect.x + htRect.w / 2, htRect.y + htRect.h / 2, { dur: 240 });
+        await agent.moveTo(htRect.x + htRect.w / 2, htRect.y + htRect.h / 2, { dur: 160 });
         agent.click();
         hairTab.click();
         this.pop(0.75);
       } else {
-        await this.wait(100);
+        await this.wait(50);
       }
     }
 
@@ -554,19 +579,20 @@ export class SelfBuildingEngine {
       const p1 = [];
       for (const it of block.items) {
         p1.push(this.dispatch((a) => this.wireJob(a, it), at(it)));
-        await this.wait(38);
+        await this.wait(22);
       }
       await Promise.all(p1);
-      await this.wait(200);
+      await this.wait(120);
 
       // Phase 2: Resolve and build items
       const p2 = [];
       for (const it of block.items) {
         p2.push(this.dispatch((a) => this.resolveJob(a, it), at(it)));
-        await this.wait(56);
+        await this.wait(32);
       }
       await Promise.all(p2);
       block.fin = true;
+      block.el.classList.add('sb-resolved');
 
       if (block.el.hasAttribute('data-finale')) {
         this.finishFinale();
@@ -600,24 +626,45 @@ export class SelfBuildingEngine {
 
     for (let i = 0; i < this.blocks.length; ) {
       if (!isAlive()) return;
+      const currentScore = this.blocks[i].score;
       const top = rectOf(this.blocks[i].el).y;
       let j = i;
       let bottom = top + rectOf(this.blocks[i].el).h;
 
+      // Group elements within the same semantic portfolio section
       while (j + 1 < this.blocks.length) {
+        const nextScore = this.blocks[j + 1].score;
+        if (nextScore !== currentScore) break;
         const nextR = rectOf(this.blocks[j + 1].el);
-        if (nextR.y + nextR.h > top + vh - 60) break;
+        if (nextR.y + nextR.h > top + vh - 40) break;
         j++;
         bottom = Math.max(bottom, nextR.y + nextR.h);
       }
 
-      const groupHeight = bottom - top;
-      const isFirst = i === 0;
-      const targetY = isFirst
-        ? 0
-        : groupHeight < vh - 120
-        ? top - Math.min((vh - 90 - groupHeight) / 2, vh * 0.15)
-        : top - 24;
+      // Calculate camera scroll target for current section
+      let targetY = 0;
+      if (currentScore <= 20) {
+        targetY = 0;
+      } else if (currentScore === 30) {
+        const aboutEl = document.getElementById('about');
+        targetY = aboutEl ? Math.max(0, rectOf(aboutEl).y - 70) : top - 40;
+      } else if (currentScore === 40) {
+        const skillsEl = document.querySelector('.three-panel-grid') || this.blocks[i].el;
+        targetY = Math.max(0, rectOf(skillsEl).y - 70);
+      } else if (currentScore === 50) {
+        const certsEl = document.getElementById('certificates') || this.blocks[i].el;
+        targetY = Math.max(0, rectOf(certsEl).y - 80);
+      } else if (currentScore === 60) {
+        const projEl = document.querySelector('.projects-trio') || document.getElementById('projects');
+        targetY = projEl ? Math.max(0, rectOf(projEl).y - 80) : top - 50;
+      } else if (currentScore === 70) {
+        const contactEl = document.getElementById('contact');
+        targetY = contactEl ? Math.max(0, rectOf(contactEl).y - 70) : top - 40;
+      } else if (currentScore >= 80) {
+        targetY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      } else {
+        targetY = Math.max(0, top - 40);
+      }
 
       const group = this.blocks.slice(i, j + 1).filter((b) => !b.fin);
 
@@ -627,20 +674,20 @@ export class SelfBuildingEngine {
         let scrollPromise = Promise.resolve();
         if (this.autoOn) {
           const dist = Math.abs(targetY - window.scrollY);
-          scrollPromise = this.scrollToY(targetY, clamp(dist * 1.4, 480, 1400), myGen);
+          scrollPromise = this.scrollToY(targetY, clamp(dist * 0.9, 320, 900), myGen);
         }
 
-        await this.wait(isFirst ? 0 : 280);
+        await this.wait(i === 0 ? 0 : 160);
         if (!isAlive()) return;
 
         const buildPromises = group.map((b, idx) =>
-          this.wait(idx * 120).then(() => this.buildBlock(b))
+          this.wait(idx * 70).then(() => this.buildBlock(b))
         );
 
         await Promise.all([scrollPromise, ...buildPromises]);
         if (!isAlive()) return;
 
-        await this.wait(isFirst ? 700 : 500);
+        await this.wait(i === 0 ? 320 : 260);
         if (!isAlive()) return;
       }
 
@@ -653,20 +700,22 @@ export class SelfBuildingEngine {
   }
 
   updateSectionStatus(el) {
-    const section = el.closest('section') || el;
-    const id = section.id || section.className || '';
-    if (id.includes('hero') || id.includes('top')) {
-      this.onStatus('Assembling Hero & Bio...');
-    } else if (id.includes('about')) {
-      this.onStatus('Constructing About & Specs...');
-    } else if (id.includes('skills')) {
-      this.onStatus('Assembling Tech Matrix & Skills...');
-    } else if (id.includes('projects')) {
-      this.onStatus('Building Showcase: LHS Cut, Pioneer & 32 Dental...');
-    } else if (id.includes('contact')) {
-      this.onStatus('Wiring Contact & Channels...');
-    } else if (id.includes('footer')) {
-      this.onStatus('Finalizing Portfolio Layers...');
+    if (el.matches('header.header-bar, .header-bar') || el.closest('.header-bar')) {
+      this.onStatus('01/08 · Assembling Navbar & Navigation...');
+    } else if (el.closest('.hero-section')) {
+      this.onStatus('02/08 · Constructing Hero & Identity...');
+    } else if (el.closest('#about')) {
+      this.onStatus('03/08 · Building About & Journey...');
+    } else if (el.closest('.three-panel-grid') || el.matches('.panel-card')) {
+      this.onStatus('04/08 · Assembling Tech Arsenal & Skills...');
+    } else if (el.matches('.certs-heading-wrap, .certs-stack') || el.closest('#certificates')) {
+      this.onStatus('05/08 · Validating Certifications & Credentials...');
+    } else if (el.closest('#projects')) {
+      this.onStatus('06/08 · Building Showcase: LHS Cut, Pioneer & 32 Dental...');
+    } else if (el.closest('#contact')) {
+      this.onStatus('07/08 · Connecting Contact Gateway & Socials...');
+    } else if (el.matches('footer#footer, footer') || el.closest('footer')) {
+      this.onStatus('08/08 · Finalizing Complete Portfolio...');
     } else {
       this.onStatus('Assembling Portfolio...');
     }
@@ -678,6 +727,7 @@ export class SelfBuildingEngine {
   finishFinale() {
     if (this.finished) return;
     this.finished = true;
+    this.started = true;
     this.touring = false;
     this.onStatus('Done — Portfolio Ready');
     this.onStateChange('done');
@@ -686,6 +736,16 @@ export class SelfBuildingEngine {
     // Mark completion in document so all elements are 100% visible and interactive
     document.documentElement.classList.remove('sb-building');
     document.documentElement.classList.add('sb-complete');
+
+    // Force-reveal every single block and item — guarantees nothing stays hidden
+    document.querySelectorAll('[data-block], [data-b]').forEach(el => el.classList.add('sb-resolved'));
+
+    // After a brief settle, remove animation classes entirely so normal CSS takes over
+    // (prevents sb-complete !important from blocking hover transforms, etc.)
+    setTimeout(() => {
+      document.documentElement.classList.remove('sb-complete');
+      document.querySelectorAll('.sb-resolved').forEach(el => el.classList.remove('sb-resolved'));
+    }, 1200);
 
     // Agents scatter outward gently and fade
     if (this.stage) {
@@ -701,6 +761,10 @@ export class SelfBuildingEngine {
      START, PAUSE, REPLAY & SKIP CONTROLS
      ========================================================================= */
   async start() {
+    if (this.started && !this.finished) return;
+    this.started = true;
+    this.finished = false;
+    this.paused = false;
     this.unlockAudio();
     this.discoverBlocks();
     this.createAgents();
@@ -712,7 +776,7 @@ export class SelfBuildingEngine {
     }
 
     this.whoosh();
-    await this.wait(250);
+    await this.wait(150);
     this.runTour();
   }
 
@@ -748,6 +812,7 @@ export class SelfBuildingEngine {
     window.scrollTo(0, 0);
     this.finished = false;
     this.paused = false;
+    this.started = true;
     this.vt = 0;
 
     this.start();
@@ -764,13 +829,20 @@ export class SelfBuildingEngine {
     document.querySelectorAll('.sb-wire').forEach((w) => w.remove());
     document.documentElement.classList.remove('sb-building');
     document.documentElement.classList.add('sb-complete');
-    document.querySelectorAll('[data-b]').forEach((el) => el.classList.add('sb-resolved'));
+    document.querySelectorAll('[data-block], [data-b]').forEach((el) => el.classList.add('sb-resolved'));
+
+    // After a brief settle, remove animation classes entirely so normal CSS takes over
+    setTimeout(() => {
+      document.documentElement.classList.remove('sb-complete');
+      document.querySelectorAll('.sb-resolved').forEach(el => el.classList.remove('sb-resolved'));
+    }, 1200);
 
     if (this.stage) {
       this.stage.classList.add('sb-fade-out');
     }
 
     this.finished = true;
+    this.started = true;
     this.touring = false;
     this.onProgress(this.totalItems, this.totalItems, 1);
     this.onStatus('Portfolio Ready');
@@ -814,7 +886,15 @@ export class SelfBuildingEngine {
 
       if (e.code === 'Space') {
         e.preventDefault();
-        this.togglePause();
+        if (!this.started || this.finished) {
+          if (this.finished) {
+            this.replay();
+          } else {
+            this.start();
+          }
+        } else {
+          this.togglePause();
+        }
       } else if (key === 'r') {
         e.preventDefault();
         this.replay();

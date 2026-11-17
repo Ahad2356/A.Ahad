@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home-page-container">
+    <div className="home-page-container" style={{ position: 'relative' }}>
       {/* 240-Frame Canvas Scroll Viewport */}
       <CanvasScroll />
 
