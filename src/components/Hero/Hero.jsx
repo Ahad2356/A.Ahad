@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiArrowUpRight, FiDownload, FiMapPin, FiAward, FiBookOpen, FiCode, FiCpu } from 'react-icons/fi';
+import { FiArrowUpRight, FiDownload, FiMapPin, FiAward, FiBookOpen, FiCode } from 'react-icons/fi';
 import { FaReact, FaJs, FaWordpress, FaHtml5, FaCss3Alt, FaRobot } from 'react-icons/fa6';
 import DeveloperShowcase from '../DeveloperShowcase/DeveloperShowcase';
 import './Hero.css';
@@ -83,7 +83,8 @@ export default function Hero() {
           <DeveloperShowcase />
         </div>
 
-        {/* Right Hero: Quick Info Panel */}
+        {/* Right Hero: Quick Info Panel + animated Hire Me signature */}
+        <div className="hero-right">
         <div className="quick-info-card" data-block data-b="box">
           <div className="quick-info-header" data-b="text">QUICK INFO</div>
 
@@ -143,6 +144,10 @@ export default function Hero() {
               48,500+ institutions.
             </div>
           </div>
+        </div>
+
+        {/* The signature animation belongs to the band above the footer
+            (ParticleSignature); the earlier Hero copy is unmounted, its files kept. */}
         </div>
       </div>
     </section>

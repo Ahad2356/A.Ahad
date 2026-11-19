@@ -5,6 +5,17 @@ import { projects, certificates } from '../../data/projects';
 import ProjectCard from './ProjectCard';
 import './FeaturedProjects.css';
 
+/**
+ * The homepage "Selected Work" showcase: the three deployed client sites plus the
+ * certificates column. `SHOWCASE_IDS` fixes the trio and its order independently of
+ * the `featured` flag on `/projects`, and `filter(Boolean)` keeps the section alive
+ * if a project is ever retired from the data file.
+ *
+ * The `data-block` / `data-b` attributes are the build-animation contract: the engine
+ * discovers them, so anything added here is automatically constructed in stage 06/08.
+ * Transient overlays (modals, hover layers) must stay untagged or they get counted as
+ * buildable layers that are not on screen.
+ */
 export default function FeaturedProjects() {
   // The three real client showcase projects displayed in the Featured Projects section
   const SHOWCASE_IDS = ['lhs-cut', 'pioneer-solar', '32-dental'];
@@ -15,9 +26,25 @@ export default function FeaturedProjects() {
       <div className="projects-cert-grid">
         {/* Left Column: Featured Projects Trio */}
         <div>
-          <div className="section-title-wrap" data-block>
-            <div className="section-tag" data-b="text">FEATURED PROJECTS</div>
-            <div className="section-sub" data-b="text">SOME OF MY WORK</div>
+          <div className="section-title-wrap projects-head" data-block>
+            <div className="projects-head-top">
+              <div className="section-tag" data-b="text">SELECTED WORK</div>
+              <div className="projects-count" data-b="box">
+                <strong>{String(featuredList.length).padStart(2, '0')}</strong>
+                <span>PROJECTS</span>
+              </div>
+            </div>
+
+            <h2 className="projects-title" data-b="text">
+              2026 — Building Digital Experiences That{' '}
+              <span className="projects-title-accent">Matter.</span>
+            </h2>
+
+            <p className="projects-lede" data-b="text">
+              Three client websites that are live right now: a barbershop and a beauty salon
+              sharing one address, a solar equipment store, and a dental clinic with an
+              interactive smile planner. Every preview here is captured from the deployed site.
+            </p>
           </div>
 
           <div className="projects-trio" data-block>

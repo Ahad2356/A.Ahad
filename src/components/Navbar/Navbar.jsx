@@ -32,6 +32,11 @@ export default function Navbar() {
                 HOME
               </NavLink>
             </li>
+            {/* PROJECTS is a real route (/projects), matching every other nav item:
+                the URL updates, the catalogue page renders, the active state is
+                derived by NavLink, and Back/Forward + deep links work. The homepage
+                still has its Featured Projects section, reached by scrolling or via
+                the "EXPLORE ALL PROJECTS" button on that section. */}
             <li>
               <NavLink to="/projects" className={({ isActive }) => (isActive ? 'active' : '')}>
                 PROJECTS

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { FiCode, FiCpu, FiTerminal } from 'react-icons/fi';
+import { FiCode, FiCpu } from 'react-icons/fi';
 import './DeveloperShowcase.css';
 
 export default function DeveloperShowcase() {

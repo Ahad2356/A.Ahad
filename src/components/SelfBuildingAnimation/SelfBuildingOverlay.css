@@ -185,8 +185,46 @@
 }
 
 /* -------------------------------------------------------------------------
+   REVIEW STAGE — inspection scan line
+   A single 2px composited layer swept with translate3d, so the review beat
+   costs one GPU transform per frame instead of a repaint.
+   ------------------------------------------------------------------------- */
+.sb-review-scan {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 42, 75, 0.85) 18%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 42, 75, 0.85) 82%,
+    transparent 100%
+  );
+  box-shadow: 0 0 22px 5px rgba(255, 42, 75, 0.4);
+}
+
+/* -------------------------------------------------------------------------
    PROGRESSIVE ELEMENT HIDING & REVEALING
    ------------------------------------------------------------------------- */
+/*
+ * The global stylesheet sets `scroll-behavior: smooth`, which would make every
+ * per-frame window.scrollTo() write from the engine's rAF tween animate on its
+ * own — the two easing systems fight and the camera jitters (and the post-build
+ * glide cannot land). The reference drives scroll directly with no CSS smooth
+ * scrolling, so disable it for the whole duration the engine owns the camera.
+ * Restored on destroy/skip/complete so normal anchor navigation stays smooth.
+ */
+html.sb-building,
+html.sb-gliding {
+  scroll-behavior: auto;
+}
+
 html.sb-building [data-block] {
   opacity: 0.12;
   filter: grayscale(1);
@@ -310,6 +348,7 @@ html.sb-complete [data-b] {
 
 .sb-btn-start-exp {
   all: unset;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -335,6 +374,7 @@ html.sb-complete [data-b] {
 
 .sb-btn-skip-intro {
   all: unset;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -546,6 +586,12 @@ html.sb-complete [data-b] {
     max-width: none;
     padding: 12px 16px;
   }
+  /* Touch: the compact desktop chip sizes drop below the 44px target the rest of
+     the site uses, and these two buttons are the only way in or out of the intro. */
+  .sb-btn-start-exp,
+  .sb-btn-skip-intro {
+    min-height: 44px;
+  }
   .sb-intro-title {
     font-size: 12.5px;
   }
@@ -587,5 +633,315 @@ html.sb-complete [data-b] {
   .sb-hud {
     gap: 6px;
     padding: 5px 8px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   SIGNATURE ENDING — cursor-built monogram → ABDUL AHAD → HIRE ME
+   The emblem is drawn with the engine's own selection language (self-drawing
+   strokes, corner handles, a dimension bar as the crossbar), so the ending
+   looks like something this site built rather than a logo dropped on top.
+   ------------------------------------------------------------------------- */
+.sb-finale {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  padding: 24px;
+  background: radial-gradient(
+    circle at 50% 46%,
+    rgba(6, 5, 8, 0.5) 0%,
+    rgba(6, 5, 8, 0.82) 52%,
+    rgba(6, 5, 8, 0.93) 100%
+  );
+  animation: sbFinaleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes sbFinaleIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sb-emblem {
+  width: clamp(96px, 14vw, 138px);
+  height: auto;
+  overflow: visible;
+}
+
+/* Every stroke draws itself: dashoffset starts at its own path length. */
+.sb-emblem-frame,
+.sb-emblem-leg,
+.sb-emblem-rule,
+.sb-emblem-tick {
+  fill: none;
+  stroke: var(--bright-red);
+  stroke-width: 3;
+  stroke-linecap: square;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: sbEmblemDraw var(--dur, 0.5s) cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s) forwards;
+}
+
+.sb-emblem-frame {
+  --len: 472;
+  --dur: 0.62s;
+  --delay: 0.05s;
+  stroke-width: 2.2;
+}
+
+.sb-emblem-leg {
+  --len: 92;
+  --dur: 0.42s;
+  stroke-width: 4;
+}
+
+.sb-emblem-rule {
+  --len: 44;
+  --dur: 0.3s;
+  --delay: 1.02s;
+}
+
+.sb-emblem-tick {
+  --len: 16;
+  --dur: 0.16s;
+  --delay: 1.24s;
+  stroke-width: 2.4;
+}
+
+@keyframes sbEmblemDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.sb-emblem-dart {
+  fill: var(--bright-red);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sbDartIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.42s forwards;
+}
+
+@keyframes sbDartIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sb-emblem-handle {
+  fill: var(--bg-dark);
+  stroke: var(--bright-red);
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sbHandleIn 0.24s ease-out var(--delay, 0.68s) forwards;
+}
+
+@keyframes sbHandleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sb-finale-name {
+  display: flex;
+  margin-top: 14px;
+  font-size: clamp(24px, 5.2vw, 46px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.sb-finale-name span {
+  display: inline-block;
+  /* keeps the inter-word space measurable inside a flex row */
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: sbLetterIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(1.42s + var(--i) * 48ms);
+}
+
+@keyframes sbLetterIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sb-finale-sub {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0;
+  animation: sbSubIn 0.4s ease-out 2s forwards;
+}
+
+@keyframes sbSubIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sb-finale-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  opacity: 0;
+  animation: sbSubIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 2.24s forwards;
+}
+
+.sb-finale-hire {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 13px 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent-orange), var(--bright-red));
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 42, 75, 0.4);
+  transition: all var(--transition-normal);
+}
+
+.sb-finale-hire:hover,
+.sb-finale-hire:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(255, 42, 75, 0.62);
+}
+
+.sb-finale-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.sb-finale-enter:hover,
+.sb-finale-enter:focus-visible {
+  color: #ffffff;
+}
+
+.sb-finale-arrow {
+  font-size: 13px;
+}
+
+/* Discreet global affordance for visitors who dismissed the intro for good. */
+.sb-replay-chip {
+  position: fixed;
+  left: 16px;
+  bottom: clamp(14px, 2.8vh, 26px);
+  z-index: 95;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: rgba(10, 8, 14, 0.72);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.sb-replay-chip:hover,
+.sb-replay-chip:focus-visible {
+  opacity: 1;
+  color: #ffffff;
+  border-color: var(--bright-red);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .sb-finale-actions {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .sb-finale-name {
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (max-width: 560px) {
+  /*
+   * Keep the replay affordance anchored to the bottom edge on small screens.
+   * A previous override placed it at top:74px, which sat directly on top of the
+   * hero greeting ("Hello, I am") and read as overlapping/corrupt text. The
+   * chip only appears when the intro was dismissed, so the bottom-right corner
+   * is free of both the HUD and the hero copy.
+   */
+  .sb-replay-chip {
+    top: auto;
+    right: 12px;
+    left: auto;
+    bottom: clamp(12px, 2.5vh, 20px);
+  }
+}
+
+/* The ending is never mounted under reduced motion; this keeps the animations
+   from leaving anything stuck at opacity 0 if that ever changes. */
+@media (prefers-reduced-motion: reduce) {
+  .sb-finale,
+  .sb-finale * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .sb-replay-chip {
+    transition: none;
+    opacity: 0.85;
   }
 }

@@ -5,101 +5,163 @@ import project1Img from '../assets/images/project1.jpg';
 import project2Img from '../assets/images/project2.jpg';
 import project3Img from '../assets/images/project3.jpg';
 
+/**
+ * Single source of truth for every project rendered by the site.
+ *
+ * Consumed by: FeaturedProjects (the three SHOWCASE_IDS cards), pages/Projects
+ * (full grid + category filter) and pages/ProjectDetails (case study).
+ *
+ * Conventions worth keeping:
+ * - `image` is the default preview; when `experiences` exists it is overridden by
+ *   the selected experience's `preview`, so keep the first experience in sync.
+ * - Two image strategies are used on purpose: large client screenshots live in
+ *   `public/images/projects/*.webp` and are referenced by URL (kept out of the JS
+ *   bundle), while smaller screenshots are imported from `src/assets/images/` so
+ *   Vite fingerprints them.
+ * - `liveUrl` is only set when the deployment is verified; the UI hides the live
+ *   action otherwise instead of linking to a guess.
+ */
 export const projects = [
   {
     id: 'lhs-cut',
     title: 'LHS Cut',
-    tagline: 'Modern Digital Experience for Hair & Beauty Styling',
-    subtitle: 'Dual-Experience Salon & Grooming Platform',
-    category: 'Barbershop / Hair Salon',
-    description: 'Modern digital presence for a professional hair and beauty salon in Gulshan‑e‑Ravi, Lahore. Features an interactive dual-experience switcher between Hair Salon and Beauty Salon services, responsive gallery showcase, and instant booking connectivity.',
-    overview: 'LHS Cut is a premier hair and beauty grooming destination in Lahore. This modern web experience was engineered with React and Vite to present two distinct salon divisions under one unified digital brand: a specialized Hair Salon experience for precision cuts and styling, and a dedicated Beauty Salon experience for modern skin and facial care.',
-    image: '/images/projects/lhs_hair.webp',
+    tagline: 'One address, two salons — Hair & Beauty',
+    subtitle: 'Business Website for a Lahore Salon Group',
+    category: 'Barbershop / Hair & Beauty Salon Website',
+    location: 'Main Boulevard, Gulshan-e-Ravi, Lahore',
+    description: 'A modern two-part website for LHS Cut on Main Boulevard, Gulshan-e-Ravi: a barbering side run by Zeeshan and a ladies’ hair, skin and bridal studio run by Rida, published under one domain with appointment requests that reach the salon on WhatsApp.',
+    overview: 'LHS Cut asked for an online presence that matched what customers say about the floor — a neighbourhood salon that reads like a studio. The site splits that into two experiences on one address: the gents’ barbering side and the ladies’ hair, skin and bridal side, each with its own services, posted deal boards, on-site photography and WhatsApp appointment desk. It was built with React and Vite so both routes share a single fast bundle, and it carries real information only — the salon’s own prices, hours, plus code, Google listing and reviews.',
+    image: '/images/projects/lhs_hair-fold.webp',
+    screenshots: [
+      { src: '/images/projects/lhs_hair-hero.webp', label: 'Hair salon hero' },
+      { src: '/images/projects/lhs_hair-services.webp', label: 'Posted services & deal boards' },
+      { src: '/images/projects/lhs_hair-gallery.webp', label: 'Gallery photographed on site' },
+      { src: '/images/projects/lhs_hair-visit.webp', label: 'Visit — address, hours, map' },
+    ],
+    fullCapture: '/images/projects/lhs_hair.webp',
     featured: true,
     liveUrl: 'https://lhs-cut.vercel.app/',
     detailsPath: '/projects/lhs-cut',
-    role: 'Lead Frontend Developer & UI Designer',
+    role: 'Frontend Developer & Designer',
     timeline: '2025 – 2026',
     status: 'Live & Active',
     experiences: [
       {
         id: 'hair',
         label: 'Hair Experience',
-        preview: '/images/projects/lhs_hair.webp',
+        preview: '/images/projects/lhs_hair-fold.webp',
+        screenshots: [
+          { src: '/images/projects/lhs_hair-hero.webp', label: 'Barber floor hero' },
+          { src: '/images/projects/lhs_hair-services.webp', label: 'Services & posted deal boards' },
+          { src: '/images/projects/lhs_hair-gallery.webp', label: 'Gallery on site' },
+          { src: '/images/projects/lhs_hair-visit.webp', label: 'Address, hours, map' },
+        ],
+        fullCapture: '/images/projects/lhs_hair.webp',
       },
       {
         id: 'beauty',
         label: 'Beauty Experience',
-        preview: '/images/projects/lhs_beauty.webp',
+        preview: '/images/projects/lhs_beauty-fold.webp',
+        screenshots: [
+          { src: '/images/projects/lhs_beauty-hero.webp', label: 'Beauty studio hero' },
+          { src: '/images/projects/lhs_beauty-services.webp', label: 'Hair, skin & bridal services' },
+          { src: '/images/projects/lhs_beauty-book.webp', label: 'Appointment request' },
+        ],
+        fullCapture: '/images/projects/lhs_beauty.webp',
       },
     ],
-    technologies: ['React.js', 'Vite', 'CSS3 Modern Layouts', 'Responsive WebP', 'Vercel Deployment'],
+    technologies: ['React.js', 'Vite', 'CSS3 Layouts', 'WebP Imagery', 'Vercel'],
     features: [
-      'Interactive Experience Switcher: Seamless toggling between Hair and Beauty salon portfolios without page reloads',
-      'Dual Experience Portfolios: Dedicated service listings and pricing for precision haircuts and beauty treatments',
-      'High-Speed WebP Visuals: Retina-ready optimized imagery providing fast loading times on desktop and mobile',
-      '100% Fluid Mobile Layout: Tailored responsive layout for mobile appointment booking and salon consultations',
-      'Direct WhatsApp Booking: Instant integration with salon reservation desk for rapid client conversions'
+      'Two salon experiences, one deployment: Hair (barbering, colour, treatments) and Beauty (ladies’ hair, skin, bridal, nails) with cross-links and a data-salon theme switch',
+      'Appointment request form — name, mobile, service, date, time and notes — that reaches the salon as a WhatsApp message; no account, no payment, no card details',
+      'Posted prices transcribed from the salon’s own boards: nine everyday deals and five groom packages (Rs 1,300 – Rs 8,500), with single services quoted on request',
+      'On-site gallery plus silent studio loops, so the floor itself does the selling',
+      'Local-business wiring: Google Maps directions, click-to-call, WhatsApp deep links, opening-hours notes and Instagram handles for both salons'
     ]
   },
   {
     id: 'pioneer-solar',
     title: 'Pioneer Solar Energy',
-    tagline: 'Clean Sustainable Energy & Solar Power Solutions',
-    subtitle: 'Commercial & Residential Solar Consultation Portal',
+    tagline: 'Solar equipment, made easy to ask about',
+    subtitle: 'Product Catalogue & WhatsApp Enquiry Website',
     category: 'Solar Energy / Business Website',
-    description: 'Professional business platform for a green solar energy enterprise. Features comprehensive service packages, residential/commercial solar calculators, client consultation forms, and project galleries.',
-    overview: 'Pioneer Solar Energy provides turnkey solar energy design, installation, and maintenance across residential and industrial sectors. The platform was engineered to clearly convey renewable energy returns on investment, system specifications, and client consultation workflows with a high-converting corporate design.',
-    image: '/images/projects/pioneer.webp',
+    location: 'MET-1 Society, Mughalpura, Lahore',
+    description: 'A business website for a solar equipment supplier in Mughalpura, Lahore, presenting inverters, hybrid inverters, lithium batteries, panels and accessories, the brands customers ask for, and a direct WhatsApp enquiry route.',
+    overview: 'Pioneer Solar Energy supplies solar inverters, hybrid inverters, lithium batteries and the accessories that tie a system together, and stock changes week to week in the Pakistani solar market. Rather than a catalogue that goes stale, the site is built around one behaviour: pick a category, send the question, and the business answers on WhatsApp with what is actually available and at what price. It ships as a static HTML, CSS and JavaScript build on Vercel — no framework runtime — with scroll reveals, a brand marquee, a Google Maps panel and an inquiry form that composes the WhatsApp message in the visitor’s own app.',
+    image: '/images/projects/pioneer-fold.webp',
+    screenshots: [
+      { src: '/images/projects/pioneer-hero.webp', label: 'Hero & product entry points' },
+      { src: '/images/projects/pioneer-products.webp', label: 'Four product categories' },
+      { src: '/images/projects/pioneer-brands.webp', label: 'Brands marquee' },
+      { src: '/images/projects/pioneer-visit.webp', label: 'Visit — map, address, hours' },
+    ],
+    fullCapture: '/images/projects/pioneer.webp',
     featured: true,
     liveUrl: 'https://pioneer-solar-energy.vercel.app/',
     detailsPath: '/projects/pioneer-solar',
-    role: 'Frontend & Web Developer',
+    role: 'Web Developer',
     timeline: '2025',
     status: 'Live & Active',
-    technologies: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Mobile-First UI', 'Vercel Deployment'],
+    technologies: ['HTML5', 'CSS3', 'Vanilla JavaScript', 'Google Maps Embed', 'Vercel'],
     features: [
-      'Solar Solutions Showcase: In-depth breakdowns of on-grid, off-grid, and hybrid renewable energy systems',
-      'Instant Quote Consultation: Interactive inquiry forms connecting prospective clients to engineering teams',
-      'High-Contrast Visual Hierarchy: Clean corporate branding tailored for green technology and corporate trust',
-      'Cross-Device Performance: Rapid asset delivery ensuring instant paint times across all network speeds',
-      'Structured Semantic SEO: On-page optimization for renewable energy inquiries and local commercial searches'
+      'Four product categories — solar inverters, hybrid inverters, lithium batteries, panels & accessories — each with its own pre-written WhatsApp enquiry',
+      'Brand list customers ask for (GoodWe, Growatt, Solis, Inverex, Knox, Dyness, Maxpower, ITEL) with an explicit availability disclaimer instead of fake stock or pricing',
+      'Inquiry form that opens WhatsApp with the message already composed — nothing is stored on the website',
+      'Google Maps panel, plus code and call/email/social links, with a “call before visiting” note',
+      'Static build: plain CSS and a small vanilla-JS script for scroll reveals, reduced-motion handling and the brand marquee'
     ]
   },
   {
     id: '32-dental',
     title: '32 Dental Clinic & Implant Center',
-    tagline: 'Advanced Dentistry, Oral Surgery & Implant Specialists',
-    subtitle: 'Modern Healthcare & Dental Clinic Web Platform',
-    category: 'Healthcare / Dental Website',
-    description: 'Full-featured medical website for a premier dental clinic and implant center in Lahore. Showcases dental services, doctor credentials, patient hygiene standards, and online consultation scheduling.',
-    overview: '32 Dental Clinic & Implant Center is a specialized oral health institution. The digital platform provides patients with an accessible, calming medical interface showcasing advanced implantology, cosmetic dentistry, sterilization protocols, and direct doctor appointment bookings.',
-    image: '/images/projects/dental.webp',
+    tagline: 'Examination first, then treatment',
+    subtitle: 'Healthcare Website with an Interactive 3D Smile Planner',
+    category: 'Healthcare / Dental Clinic Website',
+    location: 'Main Defence Road, Lahore',
+    description: 'A healthcare website for Dr M & M Rehman’s 32 Dental Clinic and Implant Center on Main Defence Road, Lahore — examination-first positioning, eleven listed treatments, clinic case records and an appointment request that reaches the clinic on WhatsApp.',
+    overview: 'The clinic’s listing reads as open around the clock, and its work runs from scaling and fillings through root canals, crowns, braces, implants and dentures. The site presents that as a single practice — examine first, then propose — and gives patients two things dentistry websites usually don’t: an interactive 3D tooth model and an arch set-up, both clearly labelled as illustrative teaching tools rather than treatment promises. Treatment prices are deliberately absent because the clinic only publishes some rates on undated social graphics. Case records are the clinic’s own photographs, lettering and all, left exactly as supplied.',
+    image: '/images/projects/dental-fold.webp',
+    screenshots: [
+      { src: '/images/projects/dental-hero.webp', label: 'Hero — open around the clock' },
+      { src: '/images/projects/dental-treatments.webp', label: 'Eleven treatments listed' },
+      { src: '/images/projects/dental-cases.webp', label: 'Clinic case records' },
+      { src: '/images/projects/dental-visit.webp', label: 'Visit — address, numbers, hours' },
+    ],
+    fullCapture: '/images/projects/dental.webp',
     featured: true,
     liveUrl: 'https://32-dental.vercel.app/',
     detailsPath: '/projects/32-dental',
-    role: 'Frontend Developer & UI Specialist',
-    timeline: '2025 – 2026',
+    role: 'Frontend Developer & 3D Web Developer',
+    timeline: '2026',
     status: 'Live & Active',
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Grid', 'Vercel Deployment'],
+    technologies: ['React.js', 'Vite', 'Three.js (WebGL)', 'Responsive CSS', 'Vercel'],
     features: [
-      'Comprehensive Treatment Catalog: Detailed overviews of dental implants, smile makeovers, and orthodontic care',
-      'Patient Appointment Pipeline: Streamlined direct communication for patient intake and consultations',
-      'Clean Medical Aesthetic: Trust-inspiring healthcare palette with accessible typography and high readability',
-      'Interactive Clinic Tour: Visual presentation of sterile clinical environments and surgical equipment',
-      'Mobile Fast-Dial Integration: One-tap emergency phone and WhatsApp consultation buttons'
+      'Interactive 3D smile planner: pick a goal, a method and a tooth (FDI notation, 28 teeth) and the panel re-orders how a case of that shape typically runs',
+      'Illustrative arch set-up with shade, width, alignment and incisal-curve sliders, labelled as a teaching toy rather than a clinical outcome',
+      'Eleven listed treatments with what each appointment involves — consultation, scaling & polishing, fillings, root canal, crowns & bridges, implants, braces, dentures, children’s dentistry, oral surgery',
+      'Appointment form (name, phone, date, time of day, treatment area, notes) that composes a WhatsApp message; confirmation happens when the clinic replies',
+      'Real practice details only: two phone numbers, email, address with plus code, Google rating and review count linked out to the live listing, and the clinic’s own hours presented beside the 24-hour listing'
     ]
   },
-  // other projects remain unchanged – will be appended below
-
   {
+    // InsiteVerse preview is a genuine full-page capture of the deployed site
+    // (https://insiteverse.vercel.app), not a stock or generated mockup.
     id: 'insiteverse',
     title: 'InsiteVerse',
     tagline: 'The Modern Journal of Ideas, Culture & Technology',
     subtitle: 'Full Stack Modern Blogging & Publishing Platform',
     description: 'A modern, high-performance web journal and content publishing platform engineered with React, Vite, and responsive typography for elegant reading experiences.',
     overview: 'InsiteVerse is a modern digital magazine and blog engineered to celebrate thought leadership, creative perspectives, and digital culture. Built with a clean editorial design language, fast navigation, and responsive typography, InsiteVerse offers a distraction-free, elegant reading and writing space.',
-    image: project1Img,
+    // Authentic captures of the deployed site (1440px viewport crops plus a
+    // 1432px full-page shot) — not a stock or generated mockup. The live page
+    // title reads "InsightVerse"; the project is listed as InsiteVerse.
+    image: '/images/projects/insiteverse-fold.webp',
+    screenshots: [
+      { src: '/images/projects/insiteverse-hero.webp', label: 'Homepage hero' },
+      { src: '/images/projects/insiteverse-content.webp', label: 'Featured articles' },
+      { src: '/images/projects/insiteverse-lower.webp', label: 'Latest perspectives' },
+    ],
+    fullCapture: '/images/projects/insiteverse.webp',
     featured: true,
     category: 'Full Stack & React',
     technologies: ['React.js', 'Vite', 'TailwindCSS', 'JavaScript (ES6+)', 'Vercel Deployment'],

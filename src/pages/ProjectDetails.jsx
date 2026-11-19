@@ -8,6 +8,9 @@ import './ProjectDetails.css';
 
 export default function ProjectDetails() {
   const { id } = useParams();
+  // Lookup by slug, not array position: deep links and refreshes must resolve the
+  // same case study regardless of how the projects data is reordered. An unknown
+  // id falls through to the in-page 404 below instead of crashing on undefined.
   const project = projects.find((p) => p.id === id);
 
   const [previewSrc, setPreviewSrc] = useState(
@@ -72,6 +75,14 @@ export default function ProjectDetails() {
             <label>TIMELINE</label>
             <span>{project.timeline}</span>
           </div>
+          {/* Client sites are physical businesses — the address they serve is part
+              of the brief, and only the verified listings carry it. */}
+          {project.location && (
+            <div className="meta-item" data-b="box">
+              <label>LOCATION SERVED</label>
+              <span>{project.location}</span>
+            </div>
+          )}
           <div className="meta-item" data-b="box">
             <label>STATUS</label>
             <span style={{ color: 'var(--bright-red)' }}>{project.status}</span>

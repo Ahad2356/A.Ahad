@@ -17,6 +17,18 @@
   align-items: start;
 }
 
+/*
+ * The right column used to stop 200px short of the hero, leaving dead space beside the
+ * code showcase. This stack fills that band with the Hire Me signature without touching
+ * the quick-info card's own size or styling.
+ */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
 .script-intro {
   font-family: 'Caveat', cursive;
   font-size: clamp(34px, 5vw, 44px);

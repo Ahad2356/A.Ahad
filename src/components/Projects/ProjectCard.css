@@ -219,7 +219,12 @@
 
 .project-mini-img {
   width: 100%;
-  height: 180px;
+  /* The fold captures are 16:9. Matching that ratio here means the card shows
+     the real browser fold; a fixed 180px box on a 248px card cropped the
+     headlines in half instead. */
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 180px;
   overflow: hidden;
   background: #09090f;
   position: relative;

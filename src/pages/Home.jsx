@@ -5,8 +5,8 @@ import About from '../components/About/About';
 import Skills from '../components/Skills/Skills';
 import FeaturedProjects from '../components/Projects/FeaturedProjects';
 import Contact from '../components/Contact/Contact';
+import ParticleSignature from '../components/ParticleSignature/ParticleSignature';
 import Footer from '../components/Footer/Footer';
-import SelfBuildingOverlay from '../components/SelfBuildingAnimation/SelfBuildingOverlay';
 
 export default function Home() {
   // Ensure title reflects homepage
@@ -20,8 +20,7 @@ export default function Home() {
       {/* 240-Frame Canvas Scroll Viewport */}
       <CanvasScroll />
 
-      {/* 18-Agent Self-Building Website Animation Overlay & HUD */}
-      <SelfBuildingOverlay />
+      {/* The 18-agent construction layer is mounted globally in App.jsx */}
 
       {/* Main Content Layers */}
       <div className="content-wrapper" style={{ position: 'relative', zIndex: 10 }}>
@@ -30,6 +29,7 @@ export default function Home() {
         <Skills />
         <FeaturedProjects />
         <Contact />
+        <ParticleSignature />
         <Footer />
       </div>
     </div>

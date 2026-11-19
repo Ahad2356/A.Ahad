@@ -168,7 +168,6 @@
   justify-content: center;
   max-height: calc(90vh - 100px);
 }
-
 .pm-viewport::-webkit-scrollbar {
   width: 8px;
 }
@@ -188,6 +187,111 @@
   height: auto;
   display: block;
   object-fit: contain;
+}
+
+/*
+ * Two display modes:
+ * - panel: a 16:9-ish section capture, letterboxed and centred so nothing is cropped
+ *   and no tall image forces the window to grow.
+ * - scroll: the full-page capture, true width and aspect, scrolled inside the window.
+ *   The viewport must NOT stretch the image: a flex item with align-items: stretch
+ *   would be squeezed to the window height and letterboxed instead of overflowing.
+ */
+.pm-viewport--panel {
+  align-items: center;
+  min-height: 320px;
+}
+.pm-screenshot--panel {
+  max-height: 100%;
+  object-fit: contain;
+}
+.pm-viewport--scroll {
+  align-items: flex-start;
+}
+.pm-viewport--scroll .pm-screenshot--full {
+  flex: none;
+  align-self: flex-start;
+}
+
+/* Section screenshots strip — the labels are the only copy; no thumbnails are
+   pre-decoded, so opening the modal costs one image instead of six. */
+.pm-strip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #0f0f18;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pm-thumbs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pm-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.pm-thumb {
+  all: unset;
+  cursor: pointer;
+  flex: none;
+  font: 700 10.5px/1 'Outfit', system-ui, sans-serif;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #9a9aae;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 7px 11px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.pm-thumb:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.pm-thumb.active {
+  color: #fff;
+  border-color: var(--bright-red);
+  background: rgba(255, 42, 75, 0.16);
+}
+.pm-thumb:focus-visible {
+  outline: 2px solid var(--bright-red);
+  outline-offset: 2px;
+}
+
+.pm-fulltoggle {
+  all: unset;
+  cursor: pointer;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 10.5px/1 'Outfit', system-ui, sans-serif;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #c9c9d8;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  padding: 7px 11px;
+  transition: all 0.2s ease;
+}
+.pm-fulltoggle:hover {
+  color: #fff;
+  border-color: var(--bright-red);
+}
+.pm-fulltoggle.active {
+  color: #fff;
+  background: rgba(255, 42, 75, 0.22);
+  border-color: var(--bright-red);
+}
+.pm-fulltoggle:focus-visible {
+  outline: 2px solid var(--bright-red);
+  outline-offset: 2px;
 }
 
 /* Footer info */
@@ -221,5 +325,19 @@
   }
   .pm-footer {
     display: none;
+  }
+  /* The strip is the only way to reach section captures on a phone, so it stays
+     visible and full-width when the footer is dropped. */
+  .pm-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .pm-fulltoggle {
+    justify-content: center;
+  }
+  .pm-viewport--panel {
+    min-height: 180px;
   }
 }

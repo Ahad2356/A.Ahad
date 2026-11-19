@@ -5,7 +5,7 @@ import './Footer.css';
 
 export default function Footer() {
   return (
-    <footer id="footer" data-block data-b="box" data-finale>
+    <footer id="footer" data-block data-b="box">
       <div className="footer-logo" data-b="box">
         <span className="brand-icon" style={{ width: '24px', height: '24px', fontSize: '11px' }}>
           A

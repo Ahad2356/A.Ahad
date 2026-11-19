@@ -5,6 +5,18 @@ import ExperienceSwitcher from './ExperienceSwitcher';
 import ProjectModal from './ProjectModal';
 import './ProjectCard.css';
 
+/**
+ * One card, two layouts.
+ *
+ * `mini` renders the compact homepage trio; the default renders the full card used
+ * on /projects. Both share the same state so behaviour cannot drift between them:
+ *
+ * - `previewSrc` starts at the first experience (or `project.image`) and is the only
+ *   thing an experience tab changes. Switching Hair/Beauty therefore swaps the image
+ *   in place — no remount, no reload, and the card, modal and case study stay in sync.
+ * - `isModalOpen` opens ProjectModal with the *currently selected* preview, so the
+ *   modal never shows a different experience than the card behind it.
+ */
 export default function ProjectCard({ project, mini = false }) {
   const [previewSrc, setPreviewSrc] = useState(
     project.experiences ? project.experiences[0].preview : project.image
@@ -15,7 +27,8 @@ export default function ProjectCard({ project, mini = false }) {
     setPreviewSrc(preview);
   };
 
-  // Mini version used in the Featured Projects trio on Homepage
+  // Compact homepage variant: the switcher sits outside the image wrapper so the
+  // tabs are never clipped by the preview's overflow hidden.
   if (mini) {
     return (
       <>
@@ -106,7 +119,8 @@ export default function ProjectCard({ project, mini = false }) {
     );
   }
 
-  // Full card used on the /projects page
+  // Full card used on the /projects page: category tag, full description, every
+  // technology pill, case-study link and (when verified) the live-site action.
   return (
     <>
       <div className={`project-card ${project.featured ? 'featured-card' : ''}`} data-block data-b="box">

@@ -123,3 +123,27 @@
   box-shadow: 0 0 8px #27c93f;
   animation: pulseGlow 2s infinite;
 }
+
+/*
+ * Pre-existing mobile clipping, found while sizing the Hire Me band: the terminal
+ * topbar (traffic lights + file tabs + LIVE tag) has a 375px min-content, which made
+ * the whole hero column wider than a 360px viewport and cut the right edge of the
+ * bio and the showcase off. Scrolling the tab row instead of the page keeps the row
+ * intact and lets the column shrink into the track.
+ */
+@media (max-width: 480px) {
+  .dev-terminal-topbar {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    padding: 10px 12px;
+  }
+  .dev-tabs {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .dev-tabs::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}

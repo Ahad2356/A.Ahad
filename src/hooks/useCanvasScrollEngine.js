@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 
 const TOTAL_FRAMES = 240;
 const LERP_FACTOR = 0.085;
+/*
+ * The complete sequence is ~15 MB across 240 WebP frames, so it is never
+ * downloaded up front. Only the neighbourhood of the playhead is fetched; the
+ * window slides as the visitor scrolls, and a frame that has not arrived yet
+ * simply leaves the previous one on the canvas for a few hundred milliseconds.
+ */
+const PREFETCH_WINDOW = 16;
 const frames = new Array(TOTAL_FRAMES);
 const requested = new Set();
 const subscribers = new Set();
@@ -27,10 +34,17 @@ function loadFrame(index) {
   image.src = `/frames/ezgif-frame-${String(index + 1).padStart(3, '0')}.webp`;
 }
 
+/**
+ * Fill the 4 in-flight request slots with the frames closest to the playhead,
+ * alternating forward/backward so scrubbing either direction is equally covered.
+ * A frame outside the window is simply not requested yet; when the playhead reaches
+ * it, `onScroll` moves `priorityFrame` and this runs again. `requested` is
+ * module-level, so a remount never re-downloads what the tab already has.
+ */
 function loadMoreFrames() {
-  while (loading < 4 && requested.size < TOTAL_FRAMES) {
+  while (loading < 4) {
     let next = -1;
-    for (let distance = 0; distance < TOTAL_FRAMES; distance++) {
+    for (let distance = 0; distance <= PREFETCH_WINDOW; distance++) {
       const forward = priorityFrame + distance;
       const backward = priorityFrame - distance;
       if (forward < TOTAL_FRAMES && !requested.has(forward)) { next = forward; break; }
@@ -85,7 +99,13 @@ export function useCanvasScrollEngine() {
     const onScroll = () => {
       const max = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - innerHeight;
       target = max > 0 ? Math.max(0, Math.min(1, scrollY / max)) : 0;
-      priorityFrame = Math.round(target * (TOTAL_FRAMES - 1));
+      const index = Math.round(target * (TOTAL_FRAMES - 1));
+      // The prefetch window follows the playhead, so scrolling is what earns
+      // the rest of the sequence instead of the page load.
+      if (index !== priorityFrame) {
+        priorityFrame = index;
+        if (backgroundEnabled) loadMoreFrames();
+      }
       schedule();
     };
     const resize = () => {
